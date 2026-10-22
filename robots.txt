@@ -3,5 +3,6 @@ Disallow: /cart.html
 Disallow: /checkout.html
 Disallow: /order.html
 Disallow: /orders.html
+Disallow: /admin.html
 
 Sitemap: https://www.abislimelab.com/sitemap.xml

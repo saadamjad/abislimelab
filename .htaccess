@@ -13,7 +13,7 @@ Options -Indexes
 
 # Keep private pages out of search results.
 <IfModule mod_headers.c>
-  <FilesMatch "^(cart|checkout|order|orders|404)\.html$">
+  <FilesMatch "^(cart|checkout|order|orders|admin|404)\.html$">
     Header set X-Robots-Tag "noindex, nofollow"
   </FilesMatch>
   Header always set X-Content-Type-Options "nosniff"

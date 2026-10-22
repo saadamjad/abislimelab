@@ -1,0 +1,173 @@
+/* Product editor: edit the catalog in a form, then download products.js and sitemap.xml to upload.
+   It never writes to the server. Work in progress is kept in this browser as a draft. */
+import { categories as C0, products as P0, faqs as F0 } from "../../../data/products.js";
+import { CONFIG } from "../config.js";
+import { $, $$, esc, store, toast } from "../utils.js";
+
+const DRAFT = "asl_editor_draft_v1";
+const clone = (x) => JSON.parse(JSON.stringify(x));
+let state = store.get(DRAFT, null) || { categories: clone(C0), products: clone(P0), faqs: clone(F0) };
+let current = 0;
+const save = () => { store.set(DRAFT, state); $("#draftNote").textContent = "Draft saved in this browser. Download files to publish."; };
+
+const slugify = (s) => s.toLowerCase().normalize("NFKD").replace(/[^\w\s-]/g, "").trim().replace(/[\s_]+/g, "-").replace(/-+/g, "-");
+const variantsToText = (v = []) => v.map((x) => `${x.name}: ${x.options.map((o) => `${o.label}${o.delta ? "=" + o.delta : ""}`).join(", ")}`).join("\n");
+function textToVariants(t) {
+  return t.split("\n").map((l) => l.trim()).filter(Boolean).map((l) => {
+    const [name, rest = ""] = l.split(/:(.*)/s);
+    const options = rest.split(",").map((o) => o.trim()).filter(Boolean).map((o) => {
+      const [label, delta] = o.split("=");
+      return { label: label.trim(), delta: Math.round(Number(delta) || 0) };
+    });
+    return { name: name.trim(), options };
+  }).filter((v) => v.name && v.options.length);
+}
+
+function renderList() {
+  $("#prodList").innerHTML = state.products.map((p, i) =>
+    `<li><button type="button" data-i="${i}" aria-current="${i === current}">${esc(p.emoji || "🫧")} ${esc(p.name || "Untitled")}${p.stock === "out" ? " · sold out" : ""}</button></li>`).join("");
+  $("#count").textContent = `${state.products.length} products`;
+}
+
+function renderForm() {
+  const p = state.products[current];
+  const f = $("#prodForm");
+  if (!p) { f.hidden = true; return; }
+  f.hidden = false;
+  f.name.value = p.name; f.slug.value = p.slug; f.price.value = p.price; f.description.value = p.description;
+  f.category.innerHTML = state.categories.map((c) => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");
+  f.category.value = p.category; f.stock.value = p.stock; f.emoji.value = p.emoji || "";
+  f.c1.value = p.c1 || "#FF4FA3"; f.c2.value = p.c2 || "#FFD1E8";
+  f.images.value = (p.images || []).join("\n");
+  f.variants.value = variantsToText(p.variants);
+  f.bestSeller.checked = !!p.bestSeller; f.isNew.checked = !!p.isNew; f.sample.checked = !!p.sample;
+  f.addedAt.value = p.addedAt || new Date().toISOString().slice(0, 10);
+  $("#formTitle").textContent = p.name || "New product";
+}
+
+function readForm() {
+  const f = $("#prodForm"), p = state.products[current];
+  Object.assign(p, {
+    name: f.name.value.trim(), slug: slugify(f.slug.value || f.name.value), price: Math.max(0, Math.round(Number(f.price.value) || 0)),
+    description: f.description.value.trim(), category: f.category.value, stock: f.stock.value, emoji: f.emoji.value.trim(),
+    c1: f.c1.value, c2: f.c2.value, variants: textToVariants(f.variants.value), bestSeller: f.bestSeller.checked,
+    isNew: f.isNew.checked, addedAt: f.addedAt.value,
+  });
+  const imgs = f.images.value.split("\n").map((s) => s.trim()).filter(Boolean);
+  if (imgs.length) p.images = imgs; else delete p.images;
+  if (f.sample.checked) p.sample = true; else delete p.sample;
+}
+
+function validate() {
+  const errs = [], seen = new Set();
+  state.products.forEach((p) => {
+    if (!p.name) errs.push("A product has no name.");
+    if (!p.slug) errs.push(`"${p.name}" has no slug.`);
+    if (seen.has(p.slug)) errs.push(`Two products share the slug "${p.slug}".`);
+    seen.add(p.slug);
+    if (!(p.price > 0)) errs.push(`"${p.name}" needs a price above 0.`);
+    if (!state.categories.some((c) => c.id === p.category)) errs.push(`"${p.name}" has an unknown collection.`);
+  });
+  return errs;
+}
+
+function renderCats() {
+  $("#catList").innerHTML = state.categories.map((c, i) => `
+    <li class="cat-row">
+      <input aria-label="Emoji" value="${esc(c.emoji)}" data-ci="${i}" data-k="emoji" style="width:64px">
+      <input aria-label="Collection name" value="${esc(c.name)}" data-ci="${i}" data-k="name">
+      <input aria-label="Short description" value="${esc(c.blurb)}" data-ci="${i}" data-k="blurb">
+      <input aria-label="Card color" type="color" value="${esc(c.color)}" data-ci="${i}" data-k="color">
+      <button type="button" class="link-btn" data-delcat="${i}">Remove</button>
+    </li>`).join("");
+}
+
+function download(name, text, type) {
+  const url = URL.createObjectURL(new Blob([text], { type }));
+  Object.assign(document.createElement("a"), { href: url, download: name }).click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function productsJs() {
+  return `/* ============================================================
+   PRODUCT CATALOG: generated by the product editor (admin.html) on ${new Date().toISOString().slice(0, 10)}.
+   Upload this file to data/products.js on your hosting.
+   - price is in PKR. stock: "in", "low" or "out".
+   - variants: each option can add a price delta in PKR.
+   ============================================================ */
+export const categories = ${JSON.stringify(state.categories, null, 2)};
+
+export const products = ${JSON.stringify(state.products, null, 2)};
+
+/* Frequently asked questions. {fee} and {whatsapp} are filled in from config.js. */
+export const faqs = ${JSON.stringify(state.faqs, null, 2)};
+`;
+}
+function sitemap() {
+  const base = CONFIG.siteUrl + "/";
+  const urls = ["", "shop.html", "about.html", "faq.html", "contact.html", "shipping.html", "returns.html", "privacy.html", "terms.html",
+    ...state.categories.map((c) => `shop.html?cat=${encodeURIComponent(c.id)}`),
+    ...state.products.map((p) => `product.html?slug=${encodeURIComponent(p.slug)}`)];
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${esc(base + u)}</loc></url>`).join("\n")}\n</urlset>\n`;
+}
+
+// Events
+$("#prodList").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-i]"); if (!b) return;
+  readForm(); current = Number(b.dataset.i); renderList(); renderForm();
+});
+$("#prodForm").addEventListener("input", () => { readForm(); renderList(); save(); });
+$("#prodForm").name.addEventListener("input", (e) => {
+  const p = state.products[current];
+  if (!p._slugEdited) { $("#prodForm").slug.value = slugify(e.target.value); readForm(); save(); }
+});
+$("#prodForm").slug.addEventListener("input", () => { state.products[current]._slugEdited = true; });
+$("#addProd").addEventListener("click", () => {
+  state.products.push({ slug: "new-slime-" + Date.now().toString(36), name: "New slime", category: state.categories[0]?.id || "", price: 1000, c1: "#FF4FA3", c2: "#FFD1E8", emoji: "🫧",
+    description: "", variants: [], stock: "in", bestSeller: false, isNew: true, addedAt: new Date().toISOString().slice(0, 10) });
+  current = state.products.length - 1; renderList(); renderForm(); save(); $("#prodForm").name.focus();
+});
+$("#delProd").addEventListener("click", () => {
+  const p = state.products[current];
+  if (!confirm(`Delete "${p.name}"? This only changes your draft until you download and upload the file.`)) return;
+  state.products.splice(current, 1); current = Math.max(0, current - 1); renderList(); renderForm(); save();
+});
+$("#dupProd").addEventListener("click", () => {
+  const p = clone(state.products[current]); p.name += " copy"; p.slug = slugify(p.name); delete p._slugEdited;
+  state.products.splice(current + 1, 0, p); current++; renderList(); renderForm(); save();
+});
+$("#catList").addEventListener("input", (e) => {
+  const el = e.target.closest("[data-ci]"); if (!el) return;
+  state.categories[el.dataset.ci][el.dataset.k] = el.value; save(); renderForm();
+});
+$("#catList").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-delcat]"); if (!b) return;
+  const c = state.categories[b.dataset.delcat];
+  if (state.products.some((p) => p.category === c.id)) { toast(`Move the products out of ${esc(c.name)} first.`); return; }
+  state.categories.splice(b.dataset.delcat, 1); renderCats(); renderForm(); save();
+});
+$("#addCat").addEventListener("click", () => {
+  const name = prompt("Collection name, e.g. Fluffy Slime"); if (!name) return;
+  const id = slugify(name);
+  if (state.categories.some((c) => c.id === id)) { toast("That collection already exists."); return; }
+  state.categories.push({ id, name, emoji: "🫧", color: "#FFD1E8", texture: "butter", blurb: "" });
+  renderCats(); renderForm(); save();
+});
+$("#dlProducts").addEventListener("click", () => {
+  readForm();
+  const errs = validate();
+  if (errs.length) { $("#errors").innerHTML = errs.map((x) => `<li>${esc(x)}</li>`).join(""); $("#errors").hidden = false; return; }
+  $("#errors").hidden = true;
+  state.products.forEach((p) => delete p._slugEdited);
+  download("products.js", productsJs(), "text/javascript"); save();
+});
+$("#dlSitemap").addEventListener("click", () => { readForm(); download("sitemap.xml", sitemap(), "application/xml"); });
+$("#reset").addEventListener("click", () => {
+  if (!confirm("Discard your draft and reload the products that are live on the site?")) return;
+  try { localStorage.removeItem(DRAFT); } catch {}
+  state = { categories: clone(C0), products: clone(P0), faqs: clone(F0) }; current = 0; renderList(); renderForm(); renderCats();
+  $("#draftNote").textContent = "Showing the live catalog.";
+});
+
+renderList(); renderForm(); renderCats();
+if (store.get(DRAFT, null)) $("#draftNote").textContent = "You have an unpublished draft in this browser.";

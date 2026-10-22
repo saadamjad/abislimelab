@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product Editor | Abi's Slime Lab</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<style>
+  .ed { display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: start; padding-block: 24px 60px; }
+  .ed-side { position: sticky; top: 16px; display: grid; gap: 12px; }
+  .ed-side ul { list-style: none; padding: 0; display: grid; gap: 6px; max-height: 60vh; overflow: auto; }
+  .ed-side li button { width: 100%; text-align: left; padding: 10px 14px; border: 2px solid var(--ink); border-radius: var(--r-sm); background: var(--paper); font-weight: 700; }
+  .ed-side li button[aria-current="true"] { background: var(--lime); }
+  .ed-top { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; padding-top: 28px; }
+  .ed-top h1 { font-size: clamp(2rem, 5vw, 3rem); }
+  .row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .checks { display: flex; flex-wrap: wrap; gap: 20px; }
+  .cat-row { display: grid; grid-template-columns: 64px 1fr 2fr 56px auto; gap: 8px; align-items: center; }
+  .cat-row input { min-height: 44px; padding: 8px 10px; border: 2px solid var(--ink); border-radius: 10px; background: var(--paper); width: 100%; }
+  #catList { list-style: none; padding: 0; display: grid; gap: 8px; }
+  .steps-box { background: var(--yellow); border: var(--line); border-radius: var(--r); padding: 16px 20px; }
+  .steps-box ol { padding-left: 20px; }
+  #errors { color: var(--danger); font-weight: 700; padding-left: 20px; }
+  @media (max-width: 860px) { .ed { grid-template-columns: 1fr; } .ed-side { position: static; } .row3 { grid-template-columns: 1fr 1fr; } .cat-row { grid-template-columns: 56px 1fr 56px; } .cat-row input[data-k="blurb"] { grid-column: 1 / -1; grid-row: 2; } }
+</style>
+</head>
+<body>
+<main class="container">
+  <div class="ed-top">
+    <div><span class="sticker">🛠 store tools</span><h1 style="margin-top:12px">Product editor</h1></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn--pink" type="button" id="dlProducts">Download products.js</button>
+      <button class="btn" type="button" id="dlSitemap">Download sitemap.xml</button>
+      <a class="btn" href="index.html">View store</a>
+    </div>
+  </div>
+  <div class="steps-box" style="margin-top:20px">
+    <b>How publishing works</b>
+    <ol><li>Edit products and collections below. Your work is saved as a draft in this browser.</li>
+      <li>Click <b>Download products.js</b> and <b>Download sitemap.xml</b>.</li>
+      <li>In Hostinger File Manager, upload <b>products.js</b> into <b>public_html/data/</b> and <b>sitemap.xml</b> into <b>public_html/</b>, replacing the old files.</li>
+      <li>Upload new product photos into <b>public_html/assets/img/</b> and list them under Images, e.g. <code>assets/img/galaxy.webp</code>.</li></ol>
+    <p class="fine" id="draftNote" role="status" style="margin-top:8px"></p>
+    <ul id="errors" role="alert" hidden></ul>
+  </div>
+
+  <div class="ed">
+    <aside class="ed-side">
+      <div style="display:flex;justify-content:space-between;align-items:center"><b id="count"></b><button class="btn btn--sm btn--lime" type="button" id="addProd">+ Add product</button></div>
+      <ul id="prodList"></ul>
+      <button class="link-btn" type="button" id="reset">Discard draft</button>
+    </aside>
+
+    <div style="display:grid;gap:24px">
+      <form class="card-box" id="prodForm" onsubmit="return false">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
+          <h2 id="formTitle" style="font-size:1.8rem"></h2>
+          <div style="display:flex;gap:8px"><button class="btn btn--sm" type="button" id="dupProd">Duplicate</button><button class="btn btn--sm" type="button" id="delProd">Delete</button></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" required></div>
+          <div class="field"><label for="f-slug">URL slug</label><input id="f-slug" name="slug"><span class="hint">Used in the product link. Avoid changing it after launch.</span></div>
+        </div>
+        <div class="row3">
+          <div class="field"><label for="f-price">Price (PKR)</label><input id="f-price" name="price" type="number" min="0" step="10"></div>
+          <div class="field"><label for="f-category">Collection</label><select id="f-category" name="category"></select></div>
+          <div class="field"><label for="f-stock">Stock</label><select id="f-stock" name="stock"><option value="in">In stock</option><option value="low">Only a few left</option><option value="out">Sold out</option></select></div>
+        </div>
+        <div class="field"><label for="f-description">Description</label><textarea id="f-description" name="description" rows="3"></textarea></div>
+        <div class="field"><label for="f-variants">Options</label><textarea id="f-variants" name="variants" rows="3" placeholder="Size: Regular, Large=450&#10;Scent: Strawberry, Unscented"></textarea>
+          <span class="hint">One option group per line. Add =amount for options that cost extra, e.g. Large=450.</span></div>
+        <div class="field"><label for="f-images">Images</label><textarea id="f-images" name="images" rows="2" placeholder="assets/img/my-slime.webp"></textarea><span class="hint">One path per line. Leave empty to show the drawn slime.</span></div>
+        <div class="row3">
+          <div class="field"><label for="f-emoji">Emoji</label><input id="f-emoji" name="emoji" maxlength="4"></div>
+          <div class="field"><label for="f-c1">Main color</label><input id="f-c1" name="c1" type="color"></div>
+          <div class="field"><label for="f-c2">Second color</label><input id="f-c2" name="c2" type="color"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="f-addedAt">Date added</label><input id="f-addedAt" name="addedAt" type="date"><span class="hint">Used for “Newest first”.</span></div>
+          <div class="checks" style="align-self:center">
+            <label class="check"><input type="checkbox" name="bestSeller"> Best seller</label>
+            <label class="check"><input type="checkbox" name="isNew"> New drop</label>
+            <label class="check"><input type="checkbox" name="sample"> Sample</label>
+          </div>
+        </div>
+      </form>
+
+      <section class="card-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h2 style="font-size:1.8rem">Collections</h2><button class="btn btn--sm btn--lime" type="button" id="addCat">+ Add collection</button></div>
+        <ul id="catList"></ul>
+      </section>
+    </div>
+  </div>
+</main>
+<script type="module" src="assets/js/pages/editor.js"></script>
+</body>
+</html>
