@@ -2,7 +2,7 @@
 * { margin: 0; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
-  font-family: var(--font); font-size: 1.0625rem; line-height: 1.6; color: var(--ink);
+  font-family: var(--font); font-size: 1rem; line-height: 1.6; color: var(--ink);
   background: var(--cream); overflow-x: hidden; -webkit-font-smoothing: antialiased;
 }
 body.menu-open { overflow: hidden; }
@@ -12,9 +12,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
 h1, h2, .display { font-family: var(--font-display); font-weight: 400; line-height: 1.04; letter-spacing: -0.01em; }
 h3 { font-family: var(--font); font-weight: 800; line-height: 1.25; letter-spacing: -0.01em; }
-h1 { font-size: clamp(2.6rem, 7vw, 5.4rem); }
-h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); }
-h3 { font-size: 1.2rem; }
+h1 { font-size: clamp(2.2rem, 5.2vw, 3.8rem); }
+h2 { font-size: clamp(1.6rem, 3.4vw, 2.4rem); }
+h3 { font-size: 1.1rem; }
 p { text-wrap: pretty; }
 [hidden] { display: none !important; }
 
@@ -29,8 +29,8 @@ p { text-wrap: pretty; }
 .fine { font-size: .9rem; color: var(--ink-soft); }
 
 .sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 32px; margin-bottom: clamp(28px, 5vw, 48px); }
-.sec-head p { max-width: 34rem; color: var(--ink-soft); font-size: 1.1rem; }
-.eyebrow { display: inline-block; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; margin-bottom: 12px; color: var(--pink); }
+.sec-head p { max-width: 34rem; color: var(--ink-soft); font-size: 1rem; }
+.eyebrow { display: inline-block; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; margin-bottom: 12px; color: var(--pink-text); }
 
 /* Scroll reveal (only hides when JS runs) */
 .js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease; }
