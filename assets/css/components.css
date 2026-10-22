@@ -222,7 +222,7 @@
 .pcard__quick { position: absolute; left: 50%; bottom: 14px; transform: translate(-50%, 12px); opacity: 0; padding: 8px 16px; min-height: 40px; border: var(--line); border-radius: var(--pill); background: var(--paper); font-weight: 800; box-shadow: var(--shadow-sm); transition: opacity .2s, transform .3s var(--ease-bounce); white-space: nowrap; }
 .pcard:hover .pcard__quick, .pcard__quick:focus-visible { opacity: 1; transform: translate(-50%, 0); }
 @media (hover: none) { .pcard__quick { opacity: 1; transform: translate(-50%, 0); left: auto; right: 10px; bottom: 10px; padding: 6px 12px; min-height: 36px; font-size: .85rem; } }
-.qv { width: min(920px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: var(--line); border-radius: var(--r-xl); box-shadow: var(--shadow-lg); background: var(--cream); color: var(--ink); overflow: auto; }
+.qv { margin: auto; width: min(920px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: var(--line); border-radius: var(--r-xl); box-shadow: var(--shadow-lg); background: var(--cream); color: var(--ink); overflow: auto; }
 .qv::backdrop { background: rgba(27, 16, 53, .55); backdrop-filter: blur(3px); }
 .qv[open] { animation: pop .35s var(--ease-bounce); }
 .qv__close { position: absolute; top: 14px; right: 14px; z-index: 2; }
