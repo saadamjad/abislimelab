@@ -1,6 +1,7 @@
 import { categories, products } from "../../data/products.js";
 import { CONFIG } from "./config.js";
 import { esc, pkr } from "./utils.js";
+import { slimeSVG } from "./slime-svg.js";
 
 export { categories, products };
 
@@ -47,8 +48,9 @@ export function slimeArt(p, { eager = false, cls = "" } = {}) {
   if (p.images?.length) {
     return `<div class="slime-art slime-art--img ${cls}"><img src="${esc(p.images[0])}" alt="${esc(p.name)} slime" ${eager ? "" : 'loading="lazy"'} decoding="async"></div>`;
   }
-  return `<div class="slime-art slime-art--${esc(cat?.texture || "butter")} ${cls}" style="--c1:${esc(p.c1)};--c2:${esc(p.c2)};--bg:${esc(cat?.color || "#fff")}" role="img" aria-label="${esc(p.name)} slime">
-    <div class="slime-art__blob"><span class="slime-art__shine"></span></div>
+  const tex = cat?.texture || "butter";
+  return `<div class="slime-art slime-art--${esc(tex)} ${cls}" style="--bg:${esc(cat?.color || "#fff")}" role="img" aria-label="${esc(p.name)} slime">
+    ${slimeSVG(tex, p.c1 || "#FF8FC0", p.c2 || "#FFD1E8", p.slug)}
     <span class="slime-art__topper" aria-hidden="true">${esc(p.emoji || "")}</span>
   </div>`;
 }

@@ -44,16 +44,20 @@
       </div>
     </div>
     <div class="hero__visual">
-      <div class="hero-stage" id="heroStage">
-        <div class="hero-blob" aria-hidden="true"></div>
-        <span class="sticker hero-stage__hint" aria-hidden="true">tap or drag the slime</span>
+      <div class="hero-stage" id="heroStage" data-slime="butter">
+        <div class="hero-fallback" aria-hidden="true"></div>
+        <div class="hero-guide" aria-hidden="true"><span class="hero-guide__ring"></span><span class="hero-guide__hand">👆</span></div>
       </div>
-      <div class="hero-chips" role="group" aria-label="Change slime texture">
-        <button class="hero-chip" type="button" data-mode="butter" aria-pressed="true"><i style="background:#FFD84D"></i>Butter</button>
-        <button class="hero-chip" type="button" data-mode="cloud" aria-pressed="false"><i style="background:#FF8FC8"></i>Cloud</button>
-        <button class="hero-chip" type="button" data-mode="clear" aria-pressed="false"><i style="background:#58D3FF"></i>Clear</button>
-        <button class="hero-chip" type="button" data-mode="glitter" aria-pressed="false"><i style="background:#9B6BFF"></i>Glitter</button>
+      <p class="hero-howto"><span>👆 Tap to squish</span><span>↔ Drag to spin</span><span>👇 Pick a type</span></p>
+      <div class="hero-chips" role="group" aria-label="Pick a slime type">
+        <button class="hero-chip" type="button" data-mode="butter" aria-pressed="true">🧈 Butter</button>
+        <button class="hero-chip" type="button" data-mode="cloud" aria-pressed="false">☁️ Cloud</button>
+        <button class="hero-chip" type="button" data-mode="clear" aria-pressed="false">💧 Clear</button>
+        <button class="hero-chip" type="button" data-mode="jelly" aria-pressed="false">🍮 Jelly</button>
+        <button class="hero-chip" type="button" data-mode="crunchy" aria-pressed="false">🥣 Crunchy</button>
+        <button class="hero-chip" type="button" data-mode="glitter" aria-pressed="false">✨ Glitter</button>
       </div>
+      <p class="hero-slime-note" id="heroSlimeNote" aria-live="polite"></p>
     </div>
   </div>
 </section>
@@ -84,7 +88,7 @@
           <a class="btn btn--lime btn--lg" id="texLink" href="shop.html">Shop →</a>
         </div>
       </div>
-      <div class="tex-stage" id="texStage" data-texture="butter"><div class="tex-blob squishable" id="texBlob" aria-hidden="true"></div><span class="sticker tex-stage__hint" aria-hidden="true">tap to squish</span></div>
+      <div class="tex-stage" id="texStage" data-texture="butter"><div id="texArt" style="display:contents"></div><span class="sticker tex-stage__hint" aria-hidden="true">tap to squish</span></div>
     </div>
   </div>
 </section>

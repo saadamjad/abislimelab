@@ -2,6 +2,7 @@ import { initLayout, refreshReveal } from "../layout.js";
 import { categories, products, inCategory, productCard, getCategory, slimeArt } from "../catalog.js";
 import { faqs } from "../../../data/products.js";
 import { initHero } from "../hero3d.js";
+import { slimeSVG } from "../slime-svg.js";
 import { $, $$, esc } from "../utils.js";
 import { renderFaqs } from "./shared.js";
 
@@ -29,9 +30,8 @@ const stage = $("#texStage");
 function showTexture(id) {
   const c = getCategory(id);
   const sample = inCategory(id)[0];
-  stage.style.setProperty("--c1", sample?.c1 || c.color);
-  stage.style.setProperty("--c2", sample?.c2 || "#fff");
   stage.style.setProperty("--bg", c.color);
+  $("#texArt").innerHTML = slimeSVG(c.texture, sample?.c1 || "#FF8FC0", sample?.c2 || "#FFD1E8", c.id);
   stage.dataset.texture = c.texture;
   $("#texName").textContent = c.name;
   $("#texBlurb").textContent = c.blurb;
@@ -47,8 +47,7 @@ $("#texTabs").addEventListener("keydown", (e) => {
   const next = tabs[(i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length];
   next.focus(); showTexture(next.dataset.id);
 });
-const texBlob = $("#texBlob");
-texBlob.addEventListener("pointerdown", () => { texBlob.classList.remove("squish"); void texBlob.offsetWidth; texBlob.classList.add("squish"); });
+stage.addEventListener("pointerdown", () => { stage.classList.remove("squish"); void stage.offsetWidth; stage.classList.add("squish"); });
 showTexture(tex[0].id);
 
 // Story collage: four different textures from the catalog.

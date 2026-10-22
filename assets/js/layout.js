@@ -109,6 +109,8 @@ export const refreshReveal = initReveal;
 
 export function initLayout(page) {
   $("#site-header").innerHTML = header(page);
+  // Cart and checkout keep the screen clear for buying; WhatsApp stays in the footer there.
+  document.body.classList.toggle("page-buy", ["cart.html", "checkout.html"].includes(page));
   $("#site-footer").innerHTML = footer();
   initWidget();
 
