@@ -1,0 +1,36 @@
+:root {
+  --cream: #FFF4E6;
+  --paper: #FFFFFF;
+  --ink: #1B1035;
+  --ink-soft: #4A3F66;
+  --pink: #FF4FA3;
+  --pink-soft: #FFD1E8;
+  --lime: #B8F34A;
+  --lime-soft: #EAFCCD;
+  --grape: #8B5CF6;
+  --grape-soft: #E4D9FF;
+  --orange: #FF8A3D;
+  --sky: #4CC9F0;
+  --sky-soft: #CDEFFC;
+  --yellow: #FFE14D;
+  --wa: #25D366;
+  --danger: #D92D20;
+
+  --line: 3px solid var(--ink);
+  --shadow: 6px 6px 0 var(--ink);
+  --shadow-sm: 3px 3px 0 var(--ink);
+  --shadow-lg: 10px 10px 0 var(--ink);
+  --r-xl: 40px;
+  --r-lg: 28px;
+  --r: 20px;
+  --r-sm: 14px;
+  --pill: 999px;
+
+  --font-display: "Bagel Fat One", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --max: 1200px;
+  --gutter: clamp(16px, 4vw, 32px);
+  --section: clamp(64px, 10vw, 120px);
+  --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);
+}
