@@ -16,10 +16,10 @@
   --wa: #25D366;
   --danger: #D92D20;
 
-  --line: 3px solid var(--ink);
-  --shadow: 6px 6px 0 var(--ink);
-  --shadow-sm: 3px 3px 0 var(--ink);
-  --shadow-lg: 10px 10px 0 var(--ink);
+  --line: 2px solid var(--ink);
+  --shadow: 4px 4px 0 var(--ink);
+  --shadow-sm: 2px 2px 0 var(--ink);
+  --shadow-lg: 6px 6px 0 var(--ink);
   --r-xl: 40px;
   --r-lg: 28px;
   --r: 20px;
@@ -31,6 +31,6 @@
 
   --max: 1200px;
   --gutter: clamp(16px, 4vw, 32px);
-  --section: clamp(64px, 10vw, 120px);
+  --section: clamp(64px, 9vw, 112px);
   --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);
 }
