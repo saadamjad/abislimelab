@@ -67,7 +67,8 @@ export function productCard(p) {
   const cat = getCategory(p.category);
   const out = p.stock === "out";
   return `<article class="pcard reveal">
-    <a class="pcard__media" href="${productUrl(p)}" tabindex="-1" aria-hidden="true">${slimeArt(p)}<div class="pcard__badges">${badges(p)}</div></a>
+    <div class="pcard__media"><a href="${productUrl(p)}" tabindex="-1" aria-hidden="true">${slimeArt(p)}</a><div class="pcard__badges">${badges(p)}</div>
+      <button class="pcard__quick" type="button" data-quick="${esc(p.slug)}" aria-label="Quick view ${esc(p.name)}">👀 Quick view</button></div>
     <div class="pcard__body">
       <p class="pcard__cat">${esc(cat?.name || "")}</p>
       <h3 class="pcard__title"><a href="${productUrl(p)}">${esc(p.name)}</a></h3>

@@ -215,3 +215,21 @@
 .stock { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; }
 .stock i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--ink); }
 .stock--ok i { background: var(--lime); } .stock--low i { background: var(--yellow); } .stock--out i { background: var(--danger); }
+
+/* ---------- Quick view ---------- */
+.pcard__media { position: relative; display: block; border-bottom: var(--line); }
+.pcard__media > a { display: block; }
+.pcard__quick { position: absolute; left: 50%; bottom: 14px; transform: translate(-50%, 12px); opacity: 0; padding: 8px 16px; min-height: 40px; border: var(--line); border-radius: var(--pill); background: var(--paper); font-weight: 800; box-shadow: var(--shadow-sm); transition: opacity .2s, transform .3s var(--ease-bounce); white-space: nowrap; }
+.pcard:hover .pcard__quick, .pcard__quick:focus-visible { opacity: 1; transform: translate(-50%, 0); }
+@media (hover: none) { .pcard__quick { opacity: 1; transform: translate(-50%, 0); left: auto; right: 10px; bottom: 10px; padding: 6px 12px; min-height: 36px; font-size: .85rem; } }
+.qv { width: min(920px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: var(--line); border-radius: var(--r-xl); box-shadow: var(--shadow-lg); background: var(--cream); color: var(--ink); overflow: auto; }
+.qv::backdrop { background: rgba(27, 16, 53, .55); backdrop-filter: blur(3px); }
+.qv[open] { animation: pop .35s var(--ease-bounce); }
+.qv__close { position: absolute; top: 14px; right: 14px; z-index: 2; }
+.qv__grid { display: grid; grid-template-columns: 1fr 1fr; }
+.qv__media { position: relative; border-right: var(--line); }
+.qv__media .slime-art { height: 100%; }
+.qv__info { padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+.qv__info h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); padding-right: 40px; }
+.qv__more { font-weight: 800; }
+@media (max-width: 700px) { .qv__grid { grid-template-columns: 1fr; } .qv__media { border-right: 0; border-bottom: var(--line); max-height: 260px; overflow: hidden; } .qv__info { padding: 20px; } }

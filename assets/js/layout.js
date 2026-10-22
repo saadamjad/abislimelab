@@ -3,6 +3,7 @@ import { cart } from "./cart.js";
 import { getProduct } from "./catalog.js";
 import { $, $$, esc, toast, reducedMotion, shippingText } from "./utils.js";
 import { initWidget, WA_ICON } from "./whatsapp.js";
+import { openQuickView } from "./quickview.js";
 
 const NAV = [
   ["index.html", "Home"],
@@ -131,6 +132,8 @@ export function initLayout(page) {
 
   // Any [data-add] button adds that product with default options.
   document.addEventListener("click", (e) => {
+    const qv = e.target.closest("[data-quick]");
+    if (qv) { openQuickView(qv.dataset.quick); return; }
     const btn = e.target.closest("[data-add]");
     if (!btn) return;
     const p = getProduct(btn.dataset.add);
