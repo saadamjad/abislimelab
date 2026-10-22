@@ -9,7 +9,7 @@ The site is **100% static**: plain HTML, CSS and JavaScript. There is no server 
 ## How ordering works
 
 1. Customer adds slimes to the cart and checks out. **No online payment.**
-2. The order gets a reference like `ASL-7KQ2M9XP` and is saved in the customer's browser.
+2. The order gets a reference like `ASL-7KQ2M9XP` and is saved in the customer's browser. Customers can reopen it from **My orders**.
 3. The confirmation page offers **Download Invoice (PDF)** and **Send Order Details on WhatsApp**.
 4. The customer sends the invoice to the store's WhatsApp, and the store confirms the order there.
 5. If EmailJS is set up, the customer and the store also get an order email.
@@ -19,13 +19,13 @@ Orders start as **Awaiting WhatsApp confirmation** with payment status **Unpaid*
 ### Limits of a static site
 
 - There is no database. The store's record of an order is the WhatsApp message, the invoice and the admin email.
-- There is no admin panel. Products are edited in `data/products.js`.
+- There is no admin panel for orders. Products are managed with the product editor (`admin.html`), which exports `data/products.js`.
 - Prices are recalculated from the catalog in the browser, but a determined user could edit their own browser. Always check the invoice total against your prices before confirming on WhatsApp.
 
 ## Project structure
 
 ```
-index.html shop.html product.html cart.html checkout.html order.html
+index.html shop.html product.html cart.html checkout.html order.html orders.html admin.html
 about.html faq.html contact.html shipping.html returns.html privacy.html terms.html 404.html
 assets/css/      tokens.css, base.css, components.css, pages.css
 assets/js/       config.js, catalog.js, cart.js, orders.js, layout.js, whatsapp.js,
@@ -51,6 +51,8 @@ Libraries load from CDNs, pinned to exact versions: Three.js 0.160.0 for the hom
 | `showSampleBadges` | Set to `false` once real products replace the samples |
 | `instagram`, `tiktok`, `facebook` | Social links (hidden when empty) |
 | `emailjs` | Email keys, see below |
+
+**Product editor (easiest way).** Open `yourdomain.com/admin.html`. Edit products and collections in a form, then download `products.js` and `sitemap.xml` and upload them to Hostinger, as the page explains. The editor only builds files on your computer. It cannot change the live site, so it is safe to leave online, and search engines are told to skip it.
 
 **Products and collections** live in `data/products.js`. Each product has a slug, name, category, price, description, variants, stock (`in`, `low`, `out`), and best-seller and new flags. To use real photos, upload them to `assets/img/` and add `images: ["assets/img/your-photo.webp"]`. Without photos, a drawn slime in the product's colors is shown.
 
