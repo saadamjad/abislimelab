@@ -30,8 +30,6 @@
 .hero-chip:hover { transform: translateY(-2px); }
 .hero-slime-note { max-width: 420px; min-height: 3em; margin: 14px auto 0; text-align: center; font-size: .98rem; line-height: 1.45; }
 .hero-slime-note strong { display: block; font-size: 1.05rem; }
-.hero-bubble { position: absolute; border-radius: 50%; border: 2px solid var(--ink); background: radial-gradient(circle at 30% 30%, #fff 0 18%, rgba(255,255,255,.35) 19%); pointer-events: none; animation: rise linear infinite; bottom: -40px; opacity: .8; }
-@keyframes rise { to { transform: translateY(-110vh) translateX(30px); } }
 
 .collections { background: transparent; }
 .coll-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 22px; }
@@ -230,7 +228,6 @@
   .confirm-steps li { flex-direction: column; }
   .confirm-steps .btn { width: 100%; }
   .coll { min-height: 190px; }
-  .hero-float { display: none; }
   .hero__visual { max-width: 280px; }
   .hero__stickers { display: none; }
   .hero { padding-top: 24px; }
