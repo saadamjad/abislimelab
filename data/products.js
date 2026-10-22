@@ -55,7 +55,7 @@ export const products = [
   { slug: "unicorn-shimmer", name: "Unicorn Shimmer", category: "glitter", price: 1250, c1: "#F0ABFC", c2: "#A5B4FC", emoji: "🦄",
     description: "Pastel rainbow slime with fine shimmer that catches the light.",
     variants: [size(550)], stock: "in", bestSeller: false, isNew: true, addedAt: "2026-10-18", sample: true },
-  { slug: "starter-slime-kit", name: "Starter Slime Kit", category: "kits", price: 2500, c1: "#FF4FA3", c2: "#4CC9F0", emoji: "🧪",
+  { slug: "starter-slime-kit", name: "Starter Slime Kit", category: "kits", price: 2500, c1: "#FF8DC0", c2: "#4CC9F0", emoji: "🧪",
     description: "A beginner box with bases, colors and add-ins to mix your own slimes at home.",
     variants: [{ name: "Kit", options: [{ label: "Starter", delta: 0 }, { label: "Party (bigger)", delta: 2000 }] }],
     stock: "in", bestSeller: false, isNew: false, addedAt: "2026-04-22", sample: true },

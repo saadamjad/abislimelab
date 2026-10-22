@@ -1,19 +1,20 @@
 :root {
-  --cream: #FFF4E6;
+  --cream: #FFF8F0;
   --paper: #FFFFFF;
-  --ink: #1B1035;
-  --ink-soft: #4A3F66;
-  --pink: #FF4FA3;
-  --pink-soft: #FFD1E8;
-  --lime: #B8F34A;
-  --lime-soft: #EAFCCD;
-  --grape: #8B5CF6;
-  --grape-soft: #E4D9FF;
-  --orange: #FF8A3D;
-  --sky: #4CC9F0;
-  --sky-soft: #CDEFFC;
-  --yellow: #FFE14D;
-  --wa: #25D366;
+  --ink: #2A2140;
+  --ink-soft: #5B5274;
+  --pink: #FFA6CF;
+  --pink-text: #A8336B; /* readable pink for text on light backgrounds */
+  --pink-soft: #FFE6F2;
+  --lime: #CFF39A;
+  --lime-soft: #F1FCE0;
+  --grape: #A98BF7;
+  --grape-soft: #EEE7FF;
+  --orange: #FFBE8F;
+  --sky: #9FDDF5;
+  --sky-soft: #E2F6FD;
+  --yellow: #FFEA8A;
+  --wa: #4ADE80;
   --danger: #D92D20;
 
   --line: 2px solid var(--ink);
