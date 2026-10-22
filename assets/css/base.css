@@ -10,10 +10,11 @@ img, svg, canvas { display: block; max-width: 100%; }
 a { color: inherit; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
-h1, h2, h3, .display { font-family: var(--font-display); font-weight: 400; line-height: 1.02; letter-spacing: -0.01em; }
+h1, h2, .display { font-family: var(--font-display); font-weight: 400; line-height: 1.04; letter-spacing: -0.01em; }
+h3 { font-family: var(--font); font-weight: 800; line-height: 1.25; letter-spacing: -0.01em; }
 h1 { font-size: clamp(2.6rem, 7vw, 5.4rem); }
 h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); }
-h3 { font-size: 1.35rem; }
+h3 { font-size: 1.2rem; }
 p { text-wrap: pretty; }
 [hidden] { display: none !important; }
 
@@ -29,10 +30,10 @@ p { text-wrap: pretty; }
 
 .sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 32px; margin-bottom: clamp(28px, 5vw, 48px); }
 .sec-head p { max-width: 34rem; color: var(--ink-soft); font-size: 1.1rem; }
-.eyebrow { display: inline-block; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; font-size: .8rem; margin-bottom: 12px; }
+.eyebrow { display: inline-block; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; margin-bottom: 12px; color: var(--pink); }
 
 /* Scroll reveal (only hides when JS runs) */
-.js .reveal { opacity: 0; transform: translateY(28px) scale(.98); transition: opacity .6s ease, transform .7s var(--ease-bounce); }
+.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease; }
 .js .reveal.in { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
