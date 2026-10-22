@@ -35,7 +35,7 @@ function header(page) {
       <button class="icon-btn" type="button" id="searchOpen" aria-label="Search slimes">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
       </button>
-      <a class="cart-pill" href="cart.html" aria-label="Cart">
+      <a class="cart-pill" href="cart.html"><span class="sr-only">Cart, items:</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.4 11.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
         <span class="cart-pill__count" data-cart-count>0</span>
       </a>
