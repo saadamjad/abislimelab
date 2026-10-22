@@ -1,5 +1,7 @@
 import { CONFIG } from "./config.js";
-import { $, esc, pkr, copyText, toast } from "./utils.js";
+import { $, esc, pkr, copyText, toast, store } from "./utils.js";
+
+const SEEN = "asl_wa_seen";
 
 export const waLink = (text = "") =>
   `https://wa.me/${CONFIG.whatsappNumber}${text ? "?text=" + encodeURIComponent(text) : ""}`;
@@ -64,12 +66,17 @@ export function initWidget() {
   document.body.append(panel, fab);
   renderList();
 
-  const open = (state) => {
+  const open = (state, { focus = true } = {}) => {
     panel.hidden = !state;
     fab.setAttribute("aria-expanded", String(state));
     fab.classList.toggle("is-open", state);
-    if (state) panel.querySelector(".wa-msg")?.focus();
+    if (state) { store.set(SEEN, true); if (focus) panel.querySelector(".wa-msg")?.focus(); }
   };
+  // First visit: open once by itself, without stealing focus. Never on buying pages.
+  const page = location.pathname.split("/").pop();
+  if (!store.get(SEEN, false) && !/^(cart|checkout|order|admin)\.html$/.test(page)) {
+    setTimeout(() => { if (panel.hidden && !store.get(SEEN, false)) open(true, { focus: false }); }, 2500);
+  }
   fab.addEventListener("click", () => open(panel.hidden));
   panel.querySelector(".wa-panel__close").addEventListener("click", () => { open(false); fab.focus(); });
   panel.querySelector(".wa-copy").addEventListener("click", async () => {
