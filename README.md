@@ -32,6 +32,7 @@ assets/js/       config.js, catalog.js, cart.js, orders.js, layout.js, whatsapp.
                  hero3d.js, invoice.js, email.js, utils.js
 assets/js/pages/ one script per page
 assets/img/      favicon.svg, og.png (social preview)
+tools/           stamp-version.py (run before each release)
 data/products.js products, collections and FAQs
 .htaccess robots.txt sitemap.xml
 ```
@@ -88,6 +89,18 @@ Or from a terminal:
 python3 preview-server.py
 # opens http://localhost:5500
 ```
+
+## Releasing changes (important)
+
+Hostinger's CDN can keep serving old copies of scripts after a deploy. If old and new files mix, the site breaks. Before every commit that changes code, styles or products, run:
+
+```bash
+python3 tools/stamp-version.py
+```
+
+It adds a fresh `?v=` version to every script and stylesheet URL, so each release always loads as a complete, matching set.
+
+If you upload a new `data/products.js` from the product editor without running the script, flush the CDN afterwards: hPanel → **Performance → CDN → Flush cache**.
 
 ## Deploy to Hostinger
 
