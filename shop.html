@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop All Slime | Abi's Slime Lab</title>
+<meta name="description" content="Browse every slime: butter, cloud, clear, jelly, crunchy, glitter and DIY kits. Prices in PKR with delivery in Pakistan.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.abislimelab.com/shop.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Abi's Slime Lab">
+<meta property="og:title" content="Shop All Slime | Abi's Slime Lab">
+<meta property="og:description" content="Browse every slime: butter, cloud, clear, jelly, crunchy, glitter and DIY kits. Prices in PKR with delivery in Pakistan.">
+<meta property="og:url" content="https://www.abislimelab.com/shop.html">
+<meta property="og:image" content="https://www.abislimelab.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FFF4E6">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header id="site-header"></header>
+<main id="main">
+
+<section class="page-hero"><div class="container"><span class="sticker sticker--lime">🫧 the slime shop</span><h1 id="shopTitle" style="margin-top:18px">Shop all slime</h1><p id="shopBlurb">Every texture, every color. Tap a slime to see sizes and scents.</p></div></section>
+<section class="container" aria-label="Products" style="padding-bottom:40px">
+  <div class="shop-chips" id="catChips" role="group" aria-label="Filter by collection"></div>
+  <div class="shop-bar">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <button type="button" class="chip" data-flag="best" aria-pressed="false">🔥 Best sellers</button>
+      <button type="button" class="chip" data-flag="new" aria-pressed="false">✨ New</button>
+      <span class="shop-count" id="resultCount" aria-live="polite"></span>
+    </div>
+    <form class="shop-tools" id="filterForm" role="search">
+      <label class="sr-only" for="q">Search slimes</label>
+      <input id="q" type="search" placeholder="Search slimes…" autocomplete="off">
+      <label class="sr-only" for="sort">Sort by</label>
+      <select id="sort">
+        <option value="featured">Sort: Featured</option>
+        <option value="newest">Newest first</option>
+        <option value="price-asc">Price: low to high</option>
+        <option value="price-desc">Price: high to low</option>
+      </select>
+    </form>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+</main>
+<footer id="site-footer"></footer>
+<script type="module" src="assets/js/pages/shop.js"></script>
+</body>
+</html>
