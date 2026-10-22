@@ -78,17 +78,21 @@ The EmailJS public key is designed to be visible in the browser. Never put your 
 
 ## Run locally
 
-ES modules need a web server, so opening the files directly will not work.
+The site needs a web server, because browsers block its scripts when `index.html` is opened directly as a file. If that happens, a banner explains it.
+
+**Easiest:** double-click `start-mac.command` (Mac) or `start-windows.bat` (Windows). It starts a local server with caching turned off and opens the site. Keep its window open while you browse.
+
+Or from a terminal:
 
 ```bash
-python3 -m http.server 8000
-# open http://localhost:8000
+python3 preview-server.py
+# opens http://localhost:5500
 ```
 
 ## Deploy to Hostinger
 
 1. In hPanel open **Files → File Manager → public_html**.
-2. Upload everything in this repository except `.git`, `README.md` and `LICENSE`. Keep the folder structure.
+2. Upload everything in this repository except `.git`, `README.md`, `LICENSE`, `start-mac.command`, `start-windows.bat` and `preview-server.py`. Keep the folder structure.
 3. Make sure `.htaccess` was uploaded. It enables HTTPS, the 404 page, caching and compression.
 4. Visit your domain and place a test order.
 
