@@ -84,6 +84,23 @@ function render() {
   art.addEventListener("pointerdown", () => { art.classList.remove("squish"); void art.offsetWidth; art.classList.add("squish"); });
   void priceEl;
 
+  // Sticky add-to-cart bar on phones when the main button scrolls away.
+  if (!out) {
+    const bar = document.createElement("div");
+    bar.className = "buybar";
+    bar.innerHTML = `<div><b>${esc(p.name)}</b><span data-bar-price>${pkr(unitPrice(p, sel) * qty)}</span></div><button class="btn btn--pink" type="button">Add to cart</button>`;
+    document.body.append(bar);
+    bar.querySelector("button").addEventListener("click", () => $("#buyForm").requestSubmit());
+    const syncBar = () => { bar.querySelector("[data-bar-price]").textContent = pkr(unitPrice(p, sel) * qty); };
+    $("#buyForm").addEventListener("change", syncBar);
+    $$("[data-q]").forEach((b) => b.addEventListener("click", syncBar));
+    new IntersectionObserver(([en]) => {
+      const show = !en.isIntersecting && en.boundingClientRect.top < 0;
+      bar.classList.toggle("show", show);
+      document.body.classList.toggle("has-buybar", show);
+    }).observe($('#buyForm button[type="submit"]'));
+  }
+
   setWidgetContext({ label: `Ask about ${p.name}`, msg: `Hi! I have a question about ${p.name}: ${url}` });
 
   // Related
