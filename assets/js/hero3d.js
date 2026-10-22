@@ -2,8 +2,8 @@
    Each texture changes the shape, surface and extras, not just the color.
    Three.js loads only on the homepage. Without WebGL, or with reduced motion,
    a drawn slime is shown instead and still squishes on tap. */
-import { $, $$, reducedMotion } from "./utils.js";
-import { slimeSVG } from "./slime-svg.js";
+import { $, $$, reducedMotion } from "./utils.js?v=202610230304";
+import { slimeSVG } from "./slime-svg.js?v=202610230304";
 
 export const MODES = {
   butter:  { hex: "#FFD84D", c2: "#FFB547", label: "Butter",  desc: "Smooth and matte. Spreads like frosting.",       roughness: 0.55, clearcoat: 0.2, transmission: 0,   sheen: 0, iridescence: 0, wobble: 0.05, bump: 0,     scale: [1.12, 0.84, 1.12] },
@@ -77,7 +77,7 @@ function build(THREE, RoomEnvironment, stage, onPoke) {
   group.add(blob); scene.add(group);
 
   // Shadow puddle under the slime
-  const shadow = new THREE.Mesh(new THREE.CircleGeometry(1.25, 48), new THREE.MeshBasicMaterial({ color: 0x1b1035, transparent: true, opacity: 0.12 }));
+  const shadow = new THREE.Mesh(new THREE.CircleGeometry(1.25, 48), new THREE.MeshBasicMaterial({ color: 0x2a2140, transparent: true, opacity: 0.12 }));
   shadow.rotation.x = -Math.PI / 2; shadow.position.y = -1.25; shadow.scale.set(1.2, 1, 0.5);
   scene.add(shadow);
 
@@ -85,7 +85,7 @@ function build(THREE, RoomEnvironment, stage, onPoke) {
   const dirs = (count) => Array.from({ length: count }, () => new THREE.Vector3().randomDirection());
   const beadDirs = dirs(small ? 46 : 70);
   const beads = new THREE.InstancedMesh(new THREE.SphereGeometry(0.075, 14, 14), new THREE.MeshPhysicalMaterial({ roughness: 0.25, clearcoat: 1 }), beadDirs.length);
-  const beadCols = [0xff4fa3, 0x4cc9f0, 0xffffff, 0xffe14d, 0x8b5cf6].map((c) => new THREE.Color(c));
+  const beadCols = [0xff8dc0, 0x4cc9f0, 0xffffff, 0xffe14d, 0x8b5cf6].map((c) => new THREE.Color(c));
   beadDirs.forEach((_, i) => beads.setColorAt(i, beadCols[i % beadCols.length]));
   blob.add(beads);
   const sparkDirs = dirs(small ? 90 : 140);

@@ -1,6 +1,6 @@
 /* Hand-drawn style SVG illustrations: a distinct look for each slime texture.
    Colors come from each product (c1 = main, c2 = second). */
-const INK = "#1B1035";
+const INK = "#2A2140";
 let n = 0;
 
 const PUDDLE = "M38 132C28 98 56 64 100 62c46-2 72 34 62 70-6 22-32 30-62 30-32 0-56-8-62-30Z";
@@ -50,7 +50,7 @@ const builders = {
     <path d="M54 150c26 6 66 6 92 0" fill="none" stroke="${INK}" stroke-width="2.5" opacity=".25"/>`,
 
   crunchy: (id, c1, c2, r) => {
-    const cols = ["#FF4FA3", "#4CC9F0", "#FFFFFF", "#FFE14D", "#B8F34A", "#8B5CF6"];
+    const cols = ["#FF8DC0", "#4CC9F0", "#FFFFFF", "#FFE14D", "#B8F34A", "#8B5CF6"];
     const beads = Array.from({ length: 22 }, () => { const a = r() * Math.PI * 2, d = Math.sqrt(r()); const x = 100 + Math.cos(a) * d * 52, y = 112 + Math.sin(a) * d * 30; return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(4 + r() * 3).toFixed(1)}" fill="${cols[Math.floor(r() * cols.length)]}" stroke="${INK}" stroke-width="1.6"/>`; }).join("");
     return `
     <defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs>
