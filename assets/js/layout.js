@@ -67,7 +67,7 @@ function footer() {
     <nav class="footer__col" aria-label="Shop"><h2>Shop</h2>
       <a href="shop.html">All slimes</a><a href="shop.html?flag=best">Best sellers</a><a href="shop.html?flag=new">New drops</a><a href="index.html#collections">Collections</a></nav>
     <nav class="footer__col" aria-label="Help"><h2>Help</h2>
-      <a href="faq.html">FAQ</a><a href="shipping.html">Shipping &amp; delivery</a><a href="returns.html">Returns</a><a href="contact.html">Contact</a></nav>
+      <a href="orders.html">My orders</a><a href="faq.html">FAQ</a><a href="shipping.html">Shipping &amp; delivery</a><a href="returns.html">Returns</a><a href="contact.html">Contact</a></nav>
     <div class="footer__col"><h2>Say hi</h2>
       <a href="#" data-open-wa>WhatsApp ${esc(CONFIG.whatsappDisplay)}</a>
       ${CONFIG.storeEmail ? `<a href="mailto:${esc(CONFIG.storeEmail)}">${esc(CONFIG.storeEmail)}</a>` : ""}

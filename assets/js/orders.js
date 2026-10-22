@@ -8,3 +8,4 @@ export function saveOrder(order) {
   const keep = Object.values(all).sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 20);
   return store.set(KEY, Object.fromEntries(keep.map((o) => [o.ref, o])));
 }
+export const allOrders = () => Object.values(store.get(KEY, {})).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
