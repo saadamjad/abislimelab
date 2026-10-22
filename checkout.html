@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout | Abi's Slime Lab</title>
+<meta name="description" content="Enter your delivery details and place your slime order.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://www.abislimelab.com/checkout.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Abi's Slime Lab">
+<meta property="og:title" content="Checkout | Abi's Slime Lab">
+<meta property="og:description" content="Enter your delivery details and place your slime order.">
+<meta property="og:url" content="https://www.abislimelab.com/checkout.html">
+<meta property="og:image" content="https://www.abislimelab.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FFF4E6">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header id="site-header"></header>
+<main id="main">
+
+<section class="page-hero"><div class="container"><h1>Checkout</h1><p>No card needed. Fill in your details, place your order, then confirm it on WhatsApp.</p></div></section>
+<div class="container" id="checkoutRoot" style="padding-bottom:40px">
+  <div class="checkout-layout">
+    <form class="checkout-form" id="checkoutForm" novalidate>
+      <p class="form-error" id="formError" role="alert" hidden></p>
+      <fieldset class="card-box" style="border:var(--line)">
+        <h2><span class="n">1</span>Your details</h2>
+        <p class="hint">Fields marked <span class="req">*</span> are required.</p>
+        <div class="field"><label for="fullName">Full name <span class="req" aria-hidden="true">*</span></label><input id="fullName" name="fullName" autocomplete="name" required aria-describedby="err-fullName"><span class="err" id="err-fullName" aria-live="polite"></span></div>
+        <div class="row2">
+          <div class="field"><label for="email">Email <span class="req" aria-hidden="true">*</span></label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="err-email hint-email"><span class="hint" id="hint-email">We'll send your order confirmation here.</span><span class="err" id="err-email" aria-live="polite"></span></div>
+          <div class="field"><label for="phone">Phone / WhatsApp <span class="req" aria-hidden="true">*</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="0333 1234567" required aria-describedby="err-phone hint-phone"><span class="hint" id="hint-phone">Pakistani mobile number.</span><span class="err" id="err-phone" aria-live="polite"></span></div>
+        </div>
+      </fieldset>
+      <fieldset class="card-box" style="border:var(--line)">
+        <h2><span class="n">2</span>Delivery address</h2>
+        <div class="field"><label for="address">Street address <span class="req" aria-hidden="true">*</span></label><textarea id="address" name="address" autocomplete="street-address" rows="2" placeholder="House no., street, area / sector" required aria-describedby="err-address"></textarea><span class="err" id="err-address" aria-live="polite"></span></div>
+        <div class="field"><label for="apartment">Apartment, floor or building <span class="opt-tag">(optional)</span></label><input id="apartment" name="apartment" autocomplete="address-line2" aria-describedby="err-apartment"><span class="err" id="err-apartment" aria-live="polite"></span></div>
+        <div class="row2">
+          <div class="field"><label for="city">City <span class="req" aria-hidden="true">*</span></label><select id="city" name="city" autocomplete="address-level2" required aria-describedby="err-city"></select><span class="err" id="err-city" aria-live="polite"></span></div>
+          <div class="field"><label for="province">Province / region <span class="req" aria-hidden="true">*</span></label><select id="province" name="province" autocomplete="address-level1" required aria-describedby="err-province"></select><span class="err" id="err-province" aria-live="polite"></span></div>
+        </div>
+        <div id="cityOtherWrap" hidden><div class="field"><label for="cityOther">Your city <span class="req" aria-hidden="true">*</span></label><input id="cityOther" name="cityOther" aria-describedby="err-cityOther"><span class="err" id="err-cityOther" aria-live="polite"></span></div></div>
+        <div class="row2">
+          <div class="field"><label for="postal">Postal code <span class="opt-tag">(optional)</span></label><input id="postal" name="postal" autocomplete="postal-code" inputmode="numeric" maxlength="5" aria-describedby="err-postal"><span class="err" id="err-postal" aria-live="polite"></span></div>
+          <div class="field"><span style="font-weight:800;font-size:.95rem">Country</span><p class="input" style="display:flex;align-items:center;background:var(--cream)">Pakistan</p></div>
+        </div>
+        <div class="field"><label for="notes">Order notes <span class="opt-tag">(optional)</span></label><textarea id="notes" name="notes" rows="3" maxlength="500" placeholder="Delivery instructions, gift message, anything else" aria-describedby="err-notes"></textarea><span class="err" id="err-notes" aria-live="polite"></span></div>
+      </fieldset>
+      <div class="card-box">
+        <h2><span class="n">3</span>Review &amp; place order</h2>
+        <div class="howbox"><b>What happens next</b>
+          <ol><li>Your order is saved and you get an invoice PDF.</li><li>You send the invoice to our WhatsApp <b data-cfg="whatsapp">+92 333 1831004</b>.</li><li>We confirm your order and share payment details there.</li></ol>
+        </div>
+        <div class="field"><span style="font-weight:800">Delivering to</span><div class="review" id="review"></div></div>
+        <label class="check"><input type="checkbox" id="agree" name="agree" aria-describedby="err-agree"><span>I understand my order is confirmed only after I send it on WhatsApp, and I agree to the <a href="terms.html" target="_blank">terms</a> and <a href="privacy.html" target="_blank">privacy policy</a>. <span class="req">*</span></span></label>
+        <span class="err" id="err-agree" aria-live="polite"></span>
+        <button class="btn btn--pink btn--lg btn--block" type="submit" id="placeBtn">Place order</button>
+        <p class="fine center">No payment is taken on this website.</p>
+      </div>
+    </form>
+    <div class="checkout-side">
+      <div class="panel"><h2>Your order</h2><ul class="mini-list" id="orderItems" style="gap:14px"></ul><a href="cart.html" style="font-weight:700">Edit cart</a></div>
+      <div id="sumBox"></div>
+    </div>
+  </div>
+</div>
+
+</main>
+<footer id="site-footer"></footer>
+<script type="module" src="assets/js/pages/checkout.js"></script>
+</body>
+</html>
