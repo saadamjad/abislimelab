@@ -1,5 +1,5 @@
 import { initLayout, refreshReveal } from "../layout.js";
-import { categories, products, inCategory, productCard, getCategory } from "../catalog.js";
+import { categories, products, inCategory, productCard, getCategory, slimeArt } from "../catalog.js";
 import { faqs } from "../../../data/products.js";
 import { initHero } from "../hero3d.js";
 import { $, $$, esc } from "../utils.js";
@@ -9,7 +9,7 @@ initLayout("index.html");
 
 $("#collectionGrid").innerHTML = categories.map((c, i) => {
   const n = inCategory(c.id).length;
-  return `<a class="coll reveal" href="shop.html?cat=${esc(c.id)}" style="--bg:${esc(c.color)};--rot:${i % 2 ? 2 : -2}deg">
+  return `<a class="coll reveal" href="shop.html?cat=${esc(c.id)}" style="--bg:${esc(c.color)}">
     <span class="coll__emoji" aria-hidden="true">${esc(c.emoji)}</span>
     <span class="coll__name">${esc(c.name)}</span>
     <span class="coll__blurb">${esc(c.blurb)}</span>
@@ -50,6 +50,11 @@ $("#texTabs").addEventListener("keydown", (e) => {
 const texBlob = $("#texBlob");
 texBlob.addEventListener("pointerdown", () => { texBlob.classList.remove("squish"); void texBlob.offsetWidth; texBlob.classList.add("squish"); });
 showTexture(tex[0].id);
+
+// Story collage: four different textures from the catalog.
+const seen = new Set();
+$("#storyArt").innerHTML = products.filter((p) => !seen.has(p.category) && seen.add(p.category)).slice(0, 4)
+  .map((p) => `<div class="story__tile">${slimeArt(p)}</div>`).join("");
 
 renderFaqs($("#faqList"), faqs.slice(0, 4));
 refreshReveal();
