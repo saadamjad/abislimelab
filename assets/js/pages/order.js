@@ -1,10 +1,10 @@
-import { initLayout } from "../layout.js";
-import { CONFIG } from "../config.js";
-import { getOrder, saveOrder } from "../orders.js";
-import { loadPdfLib, buildInvoice, invoiceFileName } from "../invoice.js";
-import { sendOrderEmails, emailConfigured } from "../email.js";
-import { waLink, orderMessage, WA_ICON } from "../whatsapp.js";
-import { $, esc, pkr, formatDate, formatPkPhone, copyText, toast, reducedMotion } from "../utils.js";
+import { initLayout } from "../layout.js?v=202610230304";
+import { CONFIG } from "../config.js?v=202610230304";
+import { getOrder, saveOrder } from "../orders.js?v=202610230304";
+import { loadPdfLib, buildInvoice, invoiceFileName } from "../invoice.js?v=202610230304";
+import { sendOrderEmails, emailConfigured } from "../email.js?v=202610230304";
+import { waLink, orderMessage, WA_ICON } from "../whatsapp.js?v=202610230304";
+import { $, esc, pkr, formatDate, formatPkPhone, copyText, toast, reducedMotion } from "../utils.js?v=202610230304";
 
 initLayout("order.html");
 const root = $("#orderRoot");

@@ -1,7 +1,7 @@
-import { categories, products } from "../../data/products.js";
-import { CONFIG } from "./config.js";
-import { esc, pkr } from "./utils.js";
-import { slimeSVG } from "./slime-svg.js";
+import { categories, products } from "../../data/products.js?v=202610230304";
+import { CONFIG } from "./config.js?v=202610230304";
+import { esc, pkr } from "./utils.js?v=202610230304";
+import { slimeSVG } from "./slime-svg.js?v=202610230304";
 
 export { categories, products };
 

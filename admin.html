@@ -9,11 +9,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/tokens.css">
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/components.css">
-<link rel="stylesheet" href="assets/css/pages.css">
-<script>if(location.protocol==="file:")addEventListener("DOMContentLoaded",function(){var d=document.createElement("div");d.setAttribute("role","alert");d.style.cssText="position:fixed;inset:auto 12px 12px 12px;z-index:9999;background:#1B1035;color:#FFF4E6;padding:16px 20px;border-radius:16px;font:600 15px/1.5 system-ui,sans-serif;box-shadow:4px 4px 0 #FF4FA3";d.innerHTML="<b>This page was opened as a file, so its scripts are blocked.</b><br>Double-click <b>start-mac.command</b> (Mac) or <b>start-windows.bat</b> (Windows) in the website folder to preview it properly.";document.body.appendChild(d)})</script>
+<link rel="stylesheet" href="assets/css/tokens.css?v=202610230304">
+<link rel="stylesheet" href="assets/css/base.css?v=202610230304">
+<link rel="stylesheet" href="assets/css/components.css?v=202610230304">
+<link rel="stylesheet" href="assets/css/pages.css?v=202610230304">
+<script>if(location.protocol==="file:")addEventListener("DOMContentLoaded",function(){var d=document.createElement("div");d.setAttribute("role","alert");d.style.cssText="position:fixed;inset:auto 12px 12px 12px;z-index:9999;background:#2A2140;color:#FFF4E6;padding:16px 20px;border-radius:16px;font:600 15px/1.5 system-ui,sans-serif;box-shadow:4px 4px 0 #FF8DC0";d.innerHTML="<b>This page was opened as a file, so its scripts are blocked.</b><br>Double-click <b>start-mac.command</b> (Mac) or <b>start-windows.bat</b> (Windows) in the website folder to preview it properly.";document.body.appendChild(d)})</script>
 <style>
   .ed { display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: start; padding-block: 24px 60px; }
   .ed-side { position: sticky; top: 16px; display: grid; gap: 12px; }
@@ -47,7 +47,7 @@
     <b>How publishing works</b>
     <ol><li>Edit products and collections below. Your work is saved as a draft in this browser.</li>
       <li>Click <b>Download products.js</b> and <b>Download sitemap.xml</b>.</li>
-      <li>In Hostinger File Manager, upload <b>products.js</b> into <b>public_html/data/</b> and <b>sitemap.xml</b> into <b>public_html/</b>, replacing the old files.</li>
+      <li>In Hostinger File Manager, upload <b>products.js</b> into <b>public_html/data/</b> and <b>sitemap.xml</b> into <b>public_html/</b>, replacing the old files. Then flush the CDN: hPanel → Performance → CDN → Flush cache.</li>
       <li>Upload new product photos into <b>public_html/assets/img/</b> and list them under Images, e.g. <code>assets/img/galaxy.webp</code>.</li></ol>
     <p class="fine" id="draftNote" role="status" style="margin-top:8px"></p>
     <ul id="errors" role="alert" hidden></ul>
@@ -101,6 +101,6 @@
     </div>
   </div>
 </main>
-<script type="module" src="assets/js/pages/editor.js"></script>
+<script type="module" src="assets/js/pages/editor.js?v=202610230304"></script>
 </body>
 </html>

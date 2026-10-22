@@ -1,8 +1,8 @@
 /* Product editor: edit the catalog in a form, then download products.js and sitemap.xml to upload.
    It never writes to the server. Work in progress is kept in this browser as a draft. */
-import { categories as C0, products as P0, faqs as F0 } from "../../../data/products.js";
-import { CONFIG } from "../config.js";
-import { $, $$, esc, store, toast } from "../utils.js";
+import { categories as C0, products as P0, faqs as F0 } from "../../../data/products.js?v=202610230304";
+import { CONFIG } from "../config.js?v=202610230304";
+import { $, $$, esc, store, toast } from "../utils.js?v=202610230304";
 
 const DRAFT = "asl_editor_draft_v1";
 const clone = (x) => JSON.parse(JSON.stringify(x));
@@ -37,7 +37,7 @@ function renderForm() {
   f.pname.value = p.name; f.slug.value = p.slug; f.price.value = p.price; f.description.value = p.description;
   f.category.innerHTML = state.categories.map((c) => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");
   f.category.value = p.category; f.stock.value = p.stock; f.emoji.value = p.emoji || "";
-  f.c1.value = p.c1 || "#FF4FA3"; f.c2.value = p.c2 || "#FFD1E8";
+  f.c1.value = p.c1 || "#FF8DC0"; f.c2.value = p.c2 || "#FFD1E8";
   f.images.value = (p.images || []).join("\n");
   f.variants.value = variantsToText(p.variants);
   f.bestSeller.checked = !!p.bestSeller; f.isNew.checked = !!p.isNew; f.sample.checked = !!p.sample;
@@ -123,7 +123,7 @@ $("#prodForm").pname.addEventListener("input", (e) => {
 });
 $("#prodForm").slug.addEventListener("input", () => { state.products[current]._slugEdited = true; });
 $("#addProd").addEventListener("click", () => {
-  state.products.push({ slug: "new-slime-" + Date.now().toString(36), name: "New slime", category: state.categories[0]?.id || "", price: 1000, c1: "#FF4FA3", c2: "#FFD1E8", emoji: "🫧",
+  state.products.push({ slug: "new-slime-" + Date.now().toString(36), name: "New slime", category: state.categories[0]?.id || "", price: 1000, c1: "#FF8DC0", c2: "#FFD1E8", emoji: "🫧",
     description: "", variants: [], stock: "in", bestSeller: false, isNew: true, addedAt: new Date().toLocaleDateString("en-CA") });
   current = state.products.length - 1; renderList(); renderForm(); save(); $("#prodForm").pname.focus();
 });

@@ -1,10 +1,10 @@
-import { initLayout, refreshReveal } from "../layout.js";
-import { categories, products, inCategory, productCard, getCategory, slimeArt } from "../catalog.js";
-import { faqs } from "../../../data/products.js";
-import { initHero } from "../hero3d.js";
-import { slimeSVG } from "../slime-svg.js";
-import { $, $$, esc } from "../utils.js";
-import { renderFaqs } from "./shared.js";
+import { initLayout, refreshReveal } from "../layout.js?v=202610230304";
+import { categories, products, inCategory, productCard, getCategory, slimeArt } from "../catalog.js?v=202610230304";
+import { faqs } from "../../../data/products.js?v=202610230304";
+import { initHero } from "../hero3d.js?v=202610230304";
+import { slimeSVG } from "../slime-svg.js?v=202610230304";
+import { $, $$, esc } from "../utils.js?v=202610230304";
+import { renderFaqs } from "./shared.js?v=202610230304";
 
 initLayout("index.html");
 

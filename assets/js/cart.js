@@ -1,6 +1,6 @@
-import { CONFIG } from "./config.js";
-import { getProduct, normalizeSelection, unitPrice, variantLabel } from "./catalog.js";
-import { store } from "./utils.js";
+import { CONFIG } from "./config.js?v=202610230304";
+import { getProduct, normalizeSelection, unitPrice, variantLabel } from "./catalog.js?v=202610230304";
+import { store } from "./utils.js?v=202610230304";
 
 const KEY = "asl_cart_v1";
 const read = () => (Array.isArray(store.get(KEY, [])) ? store.get(KEY, []) : []);

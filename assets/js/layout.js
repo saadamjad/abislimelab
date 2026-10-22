@@ -1,9 +1,9 @@
-import { CONFIG } from "./config.js";
-import { cart } from "./cart.js";
-import { getProduct } from "./catalog.js";
-import { $, $$, esc, toast, reducedMotion, shippingText } from "./utils.js";
-import { initWidget, WA_ICON } from "./whatsapp.js";
-import { openQuickView } from "./quickview.js";
+import { CONFIG } from "./config.js?v=202610230304";
+import { cart } from "./cart.js?v=202610230304";
+import { getProduct } from "./catalog.js?v=202610230304";
+import { $, $$, esc, toast, reducedMotion, shippingText } from "./utils.js?v=202610230304";
+import { initWidget, WA_ICON } from "./whatsapp.js?v=202610230304";
+import { openQuickView } from "./quickview.js?v=202610230304";
 
 const NAV = [
   ["index.html", "Home"],

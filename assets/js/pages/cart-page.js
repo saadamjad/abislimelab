@@ -1,9 +1,9 @@
-import { initLayout } from "../layout.js";
-import { CONFIG } from "../config.js";
-import { cart } from "../cart.js";
-import { slimeArt, productUrl } from "../catalog.js";
-import { $, esc, pkr } from "../utils.js";
-import { summaryBox } from "./shared.js";
+import { initLayout } from "../layout.js?v=202610230304";
+import { CONFIG } from "../config.js?v=202610230304";
+import { cart } from "../cart.js?v=202610230304";
+import { slimeArt, productUrl } from "../catalog.js?v=202610230304";
+import { $, esc, pkr } from "../utils.js?v=202610230304";
+import { summaryBox } from "./shared.js?v=202610230304";
 
 initLayout("cart.html");
 const root = $("#cartRoot");
