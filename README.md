@@ -36,6 +36,8 @@ data/products.js products, collections and FAQs
 .htaccess robots.txt sitemap.xml
 ```
 
+Slime visuals are drawn in code: each texture (butter, cloud, clear, jelly, crunchy, glitter, kit) has its own illustration in `assets/js/slime-svg.js`, colored by each product's `c1` and `c2`. The homepage hero is an interactive 3D slime with six textures; phones without WebGL, or with reduced motion, see the drawn version.
+
 Libraries load from CDNs, pinned to exact versions: Three.js 0.160.0 for the homepage only, jsPDF 2.5.1 on the order page only, and EmailJS 4.4.1 only when emails are configured.
 
 ## Editing the store
