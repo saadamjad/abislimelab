@@ -3,7 +3,7 @@ ErrorDocument 404 /404.html
 Options -Indexes
 
 # Local preview launchers are not part of the live site.
-<FilesMatch "^(start-mac\.command|start-windows\.bat|preview-server\.py)$">
+<FilesMatch "^(start-mac\.command|start-windows\.bat|preview-server\.py|README\.md|LICENSE)$">
   Require all denied
 </FilesMatch>
 
@@ -47,3 +47,9 @@ Options -Indexes
 
 AddType application/javascript .js
 AddType image/webp .webp
+<FilesMatch "\.py$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^(README\.md|LICENSE)$">
+  Require all denied
+</FilesMatch>
