@@ -1,10 +1,10 @@
-import { initLayout } from "../layout.js?v=202610260051";
-import { CONFIG } from "../config.js?v=202610260051";
-import { cart } from "../cart.js?v=202610260051";
-import { slimeArt } from "../catalog.js?v=202610260051";
-import { saveOrder, getOrder } from "../orders.js?v=202610260051";
-import { $, $$, esc, pkr, normalizePkPhone, formatPkPhone, isEmail, newOrderRef, store } from "../utils.js?v=202610260051";
-import { summaryBox } from "./shared.js?v=202610260051";
+import { initLayout } from "../layout.js?v=202610260106";
+import { CONFIG } from "../config.js?v=202610260106";
+import { cart } from "../cart.js?v=202610260106";
+import { slimeArt } from "../catalog.js?v=202610260106";
+import { saveOrder, getOrder } from "../orders.js?v=202610260106";
+import { $, $$, esc, pkr, normalizePkPhone, formatPkPhone, isEmail, newOrderRef, store } from "../utils.js?v=202610260106";
+import { summaryBox } from "./shared.js?v=202610260106";
 
 initLayout("checkout.html");
 const form = $("#checkoutForm");
