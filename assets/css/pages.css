@@ -282,3 +282,6 @@ fieldset.card-box { border: var(--line) !important; }
 /* Anchor links (Craft, Love, Order) land below the sticky header. */
 section[id] { scroll-margin-top: 84px; }
 .order-card__cta .btn span[data-cfg] { white-space: nowrap; }
+
+/* All five signature slimes in one row on wide screens. */
+@media (min-width: 1100px) { .lab-grid { grid-template-columns: repeat(5, 1fr); gap: 28px; } }
