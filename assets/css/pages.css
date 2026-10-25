@@ -285,3 +285,14 @@ section[id] { scroll-margin-top: 84px; }
 
 /* All five signature slimes in one row on wide screens. */
 @media (min-width: 1100px) { .lab-grid { grid-template-columns: repeat(5, 1fr); gap: 28px; } }
+
+/* Colour swatches on product pages and quick view */
+.opts legend b { font-weight: 600; color: var(--ink-soft); }
+.opts--swatch .opt span { gap: 10px; padding-left: 10px; }
+.swatch { width: 24px; height: 24px; border-radius: 50%; background: var(--sw); box-shadow: inset 0 0 0 1px rgba(26, 45, 66, .12); flex-shrink: 0; }
+.opts--swatch .opt input:checked + span .swatch { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--sw); }
+.pdp__scent { color: var(--ink-soft); font-size: .95rem; }
+.pdp__scent b { color: var(--ink); font-weight: 600; }
+
+/* Checkout order list: keep product photos as small thumbnails. */
+.mini-list li.mini { grid-template-columns: 56px 1fr auto; }
