@@ -2,8 +2,8 @@
    Each texture changes the shape, surface and extras, not just the color.
    Three.js loads only on the homepage. Without WebGL, or with reduced motion,
    a drawn slime is shown instead and still squishes on tap. */
-import { $, $$, reducedMotion } from "./utils.js?v=202610260051";
-import { slimeSVG } from "./slime-svg.js?v=202610260051";
+import { $, $$, reducedMotion } from "./utils.js?v=202610260106";
+import { slimeSVG } from "./slime-svg.js?v=202610260106";
 
 export const MODES = {
   cloud:   { hex: "#F7B6D2", c2: "#FCE7F0", label: "Cloud",   desc: "Airy and fluffy. Drapes like whipped cream.",      roughness: 0.95, clearcoat: 0,   transmission: 0,    sheen: 1, iridescence: 0,   wobble: 0.04, bump: 0.06, scale: [1, 0.95, 1] },
