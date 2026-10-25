@@ -1,0 +1,79 @@
+/* Motion layer: playful animations on top of the client theme.
+   Everything here is decorative and switches off with "reduced motion". */
+
+/* ---------- Hero: staggered headline ---------- */
+.hero__title .hero__line { display: block; overflow: hidden; padding-bottom: .06em; }
+.hero__title .hero__line > span { display: inline-block; animation: rise-in .9s var(--ease) both; }
+.hero__title .hero__line:nth-child(2) > span { animation-delay: .12s; }
+.hero__title em { font-style: normal; color: var(--pink-bright); position: relative; }
+.hero__title em::after { content: ""; position: absolute; left: 0; right: 0; bottom: .04em; height: .12em; border-radius: var(--pill); background: var(--lime); z-index: -1; transform-origin: left; animation: underline-in .7s .6s var(--ease) both; }
+.hero__copy > .eyebrow, .hero__lead, .hero__cta { animation: fade-up .8s var(--ease) both; }
+.hero__lead { animation-delay: .25s; }
+.hero__cta { animation-delay: .35s; }
+@keyframes rise-in { from { transform: translateY(105%); } }
+@keyframes underline-in { from { transform: scaleX(0); } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(14px); } }
+
+/* ---------- Hero: photo and floating stickers ---------- */
+.hero__media { position: relative; }
+.hero__photo { will-change: transform; }
+.hero__photo img { animation: photo-in 1s var(--ease) both; }
+@keyframes photo-in { from { opacity: 0; transform: scale(.96); } }
+.float-tag { position: absolute; z-index: 2; padding: 9px 16px; border-radius: var(--pill); background: rgba(255, 255, 255, .9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: var(--shadow); font-size: .85rem; font-weight: 600; white-space: nowrap; animation: float 6s ease-in-out infinite, fade-up .8s var(--ease) both; }
+.float-tag--a { top: 8%; left: -4%; animation-delay: 0s, .5s; }
+.float-tag--b { top: 46%; right: -6%; background: var(--lime); animation-delay: -2s, .7s; }
+.float-tag--c { bottom: 8%; left: 6%; background: var(--pink); color: #fff; animation-delay: -4s, .9s; }
+@keyframes float { 0%, 100% { translate: 0 0; rotate: -2deg; } 50% { translate: 0 -10px; rotate: 2deg; } }
+
+/* ---------- Texture ribbon ---------- */
+.ribbon-wrap { overflow: hidden; padding: 24px 0; margin-bottom: clamp(24px, 5vw, 64px); }
+.ribbon { background: var(--pink); color: #fff; padding: 14px 0; transform: rotate(-1.5deg) scaleX(1.04); box-shadow: var(--glow); }
+.ribbon__track { display: flex; align-items: center; gap: 28px; width: max-content; animation: marquee 30s linear infinite; font-weight: 800; font-size: clamp(1rem, 2vw, 1.35rem); letter-spacing: -.01em; text-transform: uppercase; }
+.ribbon__track i { font-style: normal; color: var(--lime); }
+.ribbon:hover .ribbon__track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ---------- Stats strip ---------- */
+.stats { padding-bottom: var(--section); }
+.stats__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.stat { padding: 26px 22px; background: var(--paper); border: var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 4px; transition: transform .3s var(--ease), box-shadow .3s var(--ease); }
+.stat:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.stat b { font-size: clamp(1.8rem, 3.6vw, 2.6rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.05; }
+.stat:nth-child(odd) b { color: var(--pink-text); }
+.stat span { color: var(--ink-soft); font-size: .9rem; }
+@media (max-width: 760px) { .stats__grid { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- Product cards: 3D tilt + photo shine (desktop) ---------- */
+.pcard__media { transform-style: preserve-3d; transition: transform .35s var(--ease); }
+.pcard__media.tilting { transition: none; }
+.pcard__media::after { content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; opacity: 0; background: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, .45), transparent 45%); transition: opacity .3s; }
+.pcard:hover .pcard__media::after { opacity: 1; }
+
+/* ---------- Bubble burst on add to cart ---------- */
+.burst { position: fixed; z-index: 90; width: 0; height: 0; pointer-events: none; }
+.burst i { position: absolute; left: 0; top: 0; width: var(--s); height: var(--s); margin: calc(var(--s) / -2); border-radius: 50%; background: var(--c); animation: burst .75s var(--ease) forwards; }
+@keyframes burst { to { transform: translate(var(--x), var(--y)) scale(.2); opacity: 0; } }
+
+/* ---------- Slime cursor (desktop with a mouse only) ---------- */
+.cursor-blob { position: fixed; left: 0; top: 0; z-index: 100; width: 28px; height: 28px; margin: -14px 0 0 -14px; border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .8), rgba(233, 61, 130, .55) 45%, rgba(233, 61, 130, .25)); mix-blend-mode: multiply; transition: width .25s var(--ease), height .25s var(--ease), margin .25s var(--ease), opacity .3s; }
+.cursor-blob.big { width: 56px; height: 56px; margin: -28px 0 0 -28px; }
+.cursor-blob.hide { opacity: 0; }
+
+/* ---------- Buttons: soft shine sweep ---------- */
+.btn--pink { position: relative; overflow: hidden; }
+.btn--pink::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .35) 50%, transparent 70%); transform: translateX(-120%); transition: transform .7s var(--ease); }
+.btn--pink:hover::after { transform: translateX(120%); }
+
+/* ---------- Phones ---------- */
+@media (max-width: 960px) {
+  .float-tag--a { left: 3%; }
+  .float-tag--b { right: 3%; }
+}
+@media (max-width: 760px) {
+  .float-tag { font-size: .75rem; padding: 7px 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ribbon__track, .float-tag, .hero__title .hero__line > span { animation: none !important; }
+  .cursor-blob { display: none; }
+}
