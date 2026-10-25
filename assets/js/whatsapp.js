@@ -1,5 +1,5 @@
-import { CONFIG } from "./config.js?v=202610251319";
-import { $, esc, pkr, copyText, toast, store } from "./utils.js?v=202610251319";
+import { CONFIG } from "./config.js?v=202610260051";
+import { $, esc, pkr, copyText, toast, store } from "./utils.js?v=202610260051";
 
 const SEEN = "asl_wa_seen";
 
