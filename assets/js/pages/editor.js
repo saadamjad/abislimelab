@@ -1,8 +1,8 @@
 /* Product editor: edit the catalog in a form, then download products.js and sitemap.xml to upload.
    It never writes to the server. Work in progress is kept in this browser as a draft. */
-import { categories as C0, products as P0, faqs as F0 } from "../../../data/products.js?v=202610230304";
-import { CONFIG } from "../config.js?v=202610230304";
-import { $, $$, esc, store, toast } from "../utils.js?v=202610230304";
+import { categories as C0, products as P0, faqs as F0 } from "../../../data/products.js?v=202610251319";
+import { CONFIG } from "../config.js?v=202610251319";
+import { $, $$, esc, store, toast } from "../utils.js?v=202610251319";
 
 const DRAFT = "asl_editor_draft_v1";
 const clone = (x) => JSON.parse(JSON.stringify(x));
@@ -34,7 +34,7 @@ function renderForm() {
   const f = $("#prodForm");
   if (!p) { f.hidden = true; return; }
   f.hidden = false;
-  f.pname.value = p.name; f.slug.value = p.slug; f.price.value = p.price; f.description.value = p.description;
+  f.pname.value = p.name; f.slug.value = p.slug; f.price.value = p.price; f.description.value = p.description; f.scent.value = p.scent || "";
   f.category.innerHTML = state.categories.map((c) => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");
   f.category.value = p.category; f.stock.value = p.stock; f.emoji.value = p.emoji || "";
   f.c1.value = p.c1 || "#FF8DC0"; f.c2.value = p.c2 || "#FFD1E8";
@@ -49,7 +49,7 @@ function readForm() {
   const f = $("#prodForm"), p = state.products[current];
   Object.assign(p, {
     name: f.pname.value.trim(), slug: slugify(f.slug.value || f.pname.value), price: Math.max(0, Math.round(Number(f.price.value) || 0)),
-    description: f.description.value.trim(), category: f.category.value, stock: f.stock.value, emoji: f.emoji.value.trim(),
+    description: f.description.value.trim(), scent: f.scent.value.trim(), category: f.category.value, stock: f.stock.value, emoji: f.emoji.value.trim(),
     c1: f.c1.value, c2: f.c2.value, variants: textToVariants(f.variants.value), bestSeller: f.bestSeller.checked,
     isNew: f.isNew.checked, addedAt: f.addedAt.value,
   });
@@ -105,7 +105,7 @@ export const faqs = ${JSON.stringify(state.faqs, null, 2)};
 }
 function sitemap() {
   const base = CONFIG.siteUrl + "/";
-  const urls = ["", "shop.html", "about.html", "faq.html", "contact.html", "shipping.html", "returns.html", "privacy.html", "terms.html",
+  const urls = ["", "shop.html", "care.html", "about.html", "faq.html", "contact.html", "shipping.html", "returns.html", "privacy.html", "terms.html",
     ...state.categories.map((c) => `shop.html?cat=${encodeURIComponent(c.id)}`),
     ...state.products.map((p) => `product.html?slug=${encodeURIComponent(p.slug)}`)];
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${esc(base + u)}</loc></url>`).join("\n")}\n</urlset>\n`;
