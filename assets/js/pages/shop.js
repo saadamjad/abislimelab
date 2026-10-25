@@ -1,6 +1,6 @@
-import { initLayout, refreshReveal } from "../layout.js?v=202610260106";
-import { categories, products, productCard, getCategory } from "../catalog.js?v=202610260106";
-import { $, $$, esc } from "../utils.js?v=202610260106";
+import { initLayout, refreshReveal } from "../layout.js?v=202610260125";
+import { categories, products, productCard, getCategory } from "../catalog.js?v=202610260125";
+import { $, $$, esc } from "../utils.js?v=202610260125";
 
 initLayout("shop.html");
 
