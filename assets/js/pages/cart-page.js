@@ -1,12 +1,14 @@
-import { initLayout } from "../layout.js?v=202610260106";
-import { CONFIG } from "../config.js?v=202610260106";
-import { cart } from "../cart.js?v=202610260106";
-import { slimeArt, productUrl } from "../catalog.js?v=202610260106";
-import { $, esc, pkr } from "../utils.js?v=202610260106";
-import { summaryBox } from "./shared.js?v=202610260106";
+import { initLayout } from "../layout.js?v=202610260125";
+import { cart } from "../cart.js?v=202610260125";
+import { slimeArt, productUrl } from "../catalog.js?v=202610260125";
+import { $, esc, pkr } from "../utils.js?v=202610260125";
+import { summaryBox } from "./shared.js?v=202610260125";
 
 initLayout("cart.html");
 const root = $("#cartRoot");
+
+/** Jars of one product across all its colour and size lines. */
+const productTotal = (s, slug) => s.lines.filter((x) => x.slug === slug).reduce((n, x) => n + x.qty, 0);
 
 function render() {
   const s = cart.summary();
@@ -28,7 +30,7 @@ function render() {
           ${l.unavailable ? "" : `<div class="qty qty--sm" role="group" aria-label="Quantity for ${esc(l.product.name)}">
             <button type="button" data-dec="${esc(l.key)}" aria-label="Decrease" ${l.qty <= 1 ? "disabled" : ""}>−</button>
             <output aria-live="polite">${l.qty}</output>
-            <button type="button" data-inc="${esc(l.key)}" aria-label="Increase" ${l.qty >= CONFIG.maxQtyPerItem ? "disabled" : ""}>+</button></div>`}
+            <button type="button" data-inc="${esc(l.key)}" aria-label="Increase" ${productTotal(s, l.slug) >= l.max ? "disabled" : ""}>+</button></div>`}
           <p class="line__total">${l.unavailable ? "–" : pkr(l.lineTotal)}</p>
           <button type="button" class="link-btn" data-rm="${esc(l.key)}">Remove</button>
         </div>
