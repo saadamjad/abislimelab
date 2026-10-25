@@ -1,8 +1,8 @@
 /* Product editor: edit the catalog in a form, then download products.js and sitemap.xml to upload.
    It never writes to the server. Work in progress is kept in this browser as a draft. */
-import { categories as C0, products as P0, faqs as F0 } from "../../../data/products.js?v=202610260051";
-import { CONFIG } from "../config.js?v=202610260051";
-import { $, $$, esc, store, toast } from "../utils.js?v=202610260051";
+import { categories as C0, products as P0, faqs as F0 } from "../../../data/products.js?v=202610260106";
+import { CONFIG } from "../config.js?v=202610260106";
+import { $, $$, esc, store, toast } from "../utils.js?v=202610260106";
 
 const DRAFT = "asl_editor_draft_v1";
 const clone = (x) => JSON.parse(JSON.stringify(x));
