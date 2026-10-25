@@ -1,7 +1,7 @@
 /* Order emails through EmailJS (no server needed). Templates are set up in the EmailJS dashboard; see README. */
-import { CONFIG } from "./config.js?v=202610260051";
-import { loadScript, pkr, formatDate, formatPkPhone } from "./utils.js?v=202610260051";
-import { waLink, orderMessage } from "./whatsapp.js?v=202610260051";
+import { CONFIG } from "./config.js?v=202610260106";
+import { loadScript, pkr, formatDate, formatPkPhone } from "./utils.js?v=202610260106";
+import { waLink, orderMessage } from "./whatsapp.js?v=202610260106";
 
 const SDK = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js";
 
