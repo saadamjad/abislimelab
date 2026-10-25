@@ -1,8 +1,7 @@
 /* Quick view: preview a product and add it to the cart from any product card. */
-import { CONFIG } from "./config.js?v=202610260106";
-import { getProduct, getCategory, slimeArt, badges, unitPrice, normalizeSelection, productUrl, STOCK } from "./catalog.js?v=202610260106";
-import { cart } from "./cart.js?v=202610260106";
-import { $, $$, esc, pkr, toast } from "./utils.js?v=202610260106";
+import { getProduct, getCategory, slimeArt, badges, unitPrice, normalizeSelection, productUrl, stockInfo, maxQty, optionsHTML } from "./catalog.js?v=202610260125";
+import { cart } from "./cart.js?v=202610260125";
+import { $, $$, esc, pkr, toast } from "./utils.js?v=202610260125";
 
 let dlg;
 function ensureDialog() {
@@ -23,7 +22,8 @@ export function openQuickView(slug) {
   const sel = normalizeSelection(p);
   let qty = 1;
   const out = p.stock === "out";
-  const stock = STOCK[p.stock] || STOCK.in;
+  const stock = stockInfo(p);
+  const max = Math.max(1, maxQty(p));
   d.innerHTML = `
     <button class="qv__close icon-btn" type="button" aria-label="Close quick view">✕</button>
     <div class="qv__grid">
@@ -34,8 +34,7 @@ export function openQuickView(slug) {
         <p class="pdp__price" data-qv-price>${pkr(unitPrice(p, sel))}</p>
         <p class="stock stock--${stock.cls}"><i aria-hidden="true"></i>${stock.label}</p>
         <p class="pdp__desc">${esc(p.description)}</p>
-        ${(p.variants || []).map((v, vi) => `<fieldset class="opts"><legend>${esc(v.name)}</legend>${v.options.map((o, oi) =>
-          `<label class="opt"><input type="radio" name="qv${vi}" data-variant="${esc(v.name)}" value="${esc(o.label)}" ${oi === 0 ? "checked" : ""}><span>${esc(o.label)}${o.delta ? ` <small>+${pkr(o.delta)}</small>` : ""}</span></label>`).join("")}</fieldset>`).join("")}
+        ${optionsHTML(p, "qv")}
         <div class="pdp__buy">
           <div class="qty" role="group" aria-label="Quantity">
             <button type="button" data-qvq="-1" aria-label="Decrease quantity">−</button>
@@ -48,14 +47,20 @@ export function openQuickView(slug) {
       </form>
     </div>`;
   const price = () => { $("[data-qv-price]", d).textContent = pkr(unitPrice(p, sel) * qty); };
-  $$("input[data-variant]", d).forEach((r) => r.addEventListener("change", () => { sel[r.dataset.variant] = r.value; price(); }));
+  $$("input[data-variant]", d).forEach((r) => r.addEventListener("change", () => {
+    sel[r.dataset.variant] = r.value;
+    const picked = d.querySelector(`[data-picked="${CSS.escape(r.dataset.variant)}"]`);
+    if (picked) picked.textContent = r.value;
+    price();
+  }));
   $$("[data-qvq]", d).forEach((b) => b.addEventListener("click", () => {
-    qty = Math.max(1, Math.min(CONFIG.maxQtyPerItem, qty + Number(b.dataset.qvq)));
+    qty = Math.max(1, Math.min(max, qty + Number(b.dataset.qvq)));
     $("[data-qv-qty]", d).textContent = qty; price();
   }));
   $(".qv__close", d).addEventListener("click", () => d.close());
   $("[data-qv-add]", d).addEventListener("click", () => {
     if (cart.add(p.slug, sel, qty)) { d.close(); toast(`<b>${esc(p.name)}</b> × ${qty} added 🫧 <a href="cart.html">View cart →</a>`); }
+    else toast(`You already have all available ${esc(p.name)} jars in your cart.`);
   });
   d.showModal();
 }
