@@ -1,60 +1,78 @@
-import { initLayout, refreshReveal } from "../layout.js?v=202610230304";
-import { categories, products, inCategory, productCard, getCategory, slimeArt } from "../catalog.js?v=202610230304";
-import { faqs } from "../../../data/products.js?v=202610230304";
-import { initHero } from "../hero3d.js?v=202610230304";
-import { slimeSVG } from "../slime-svg.js?v=202610230304";
-import { $, $$, esc } from "../utils.js?v=202610230304";
-import { renderFaqs } from "./shared.js?v=202610230304";
+import { initLayout, refreshReveal } from "../layout.js?v=202610251319";
+import { categories, products, getCategory, productCard, slimeArt, productUrl } from "../catalog.js?v=202610251319";
+import { initHero } from "../hero3d.js?v=202610251319";
+import { waLink } from "../whatsapp.js?v=202610251319";
+import { $, esc, pkr } from "../utils.js?v=202610251319";
 
 initLayout("index.html");
 
-$("#collectionGrid").innerHTML = categories.map((c, i) => {
-  const n = inCategory(c.id).length;
-  return `<a class="coll reveal" href="shop.html?cat=${esc(c.id)}" style="--bg:${esc(c.color)}">
-    <span class="coll__emoji" aria-hidden="true">${esc(c.emoji)}</span>
-    <span class="coll__name">${esc(c.name)}</span>
-    <span class="coll__blurb">${esc(c.blurb)}</span>
-    <span class="coll__count">${n} ${n === 1 ? "slime" : "slimes"} →</span>
-  </a>`;
-}).join("");
+// The Lab: every product, in catalog order.
+$("#labGrid").innerHTML = products.map(productCard).join("");
 
-const best = products.filter((p) => p.bestSeller).slice(0, 4);
-const fresh = [...products].filter((p) => p.isNew).sort((a, b) => b.addedAt.localeCompare(a.addedAt)).slice(0, 4);
-$("#bestGrid").innerHTML = best.map(productCard).join("");
-$("#newGrid").innerHTML = fresh.map(productCard).join("");
-if (!fresh.length) $("#new").hidden = true;
+// Order section: WhatsApp link built from config so the number lives in one place.
+$("#orderWa").href = waLink("Hi Abi's Slime Lab! I'd like to order: ");
 
-// Texture showcase
-const tex = categories.filter((c) => c.texture !== "kit");
-const stage = $("#texStage");
-function showTexture(id) {
-  const c = getCategory(id);
-  const sample = inCategory(id)[0];
-  stage.style.setProperty("--bg", c.color);
-  $("#texArt").innerHTML = slimeSVG(c.texture, sample?.c1 || "#FF8FC0", sample?.c2 || "#FFD1E8", c.id);
-  stage.dataset.texture = c.texture;
-  $("#texName").textContent = c.name;
-  $("#texBlurb").textContent = c.blurb;
-  $("#texLink").href = `shop.html?cat=${c.id}`;
-  $("#texLink").textContent = `Shop ${c.name.toLowerCase()} →`;
-  $$("#texTabs button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.id === id)));
+/* ---------- Slime Match: two questions, then a recommendation ---------- */
+const MOODS = [
+  ["pastels", "🩷", "Soft pastels"],
+  ["neons", "💚", "Electric neons"],
+  ["blues", "💙", "Cool blues"],
+  ["magentas", "🟣", "Bold magentas"],
+  ["icy", "🧊", "Icy tones"],
+];
+const FEELS = categories.map((c) => [c.id, c.emoji, c.feel || c.name]);
+const QUESTIONS = [
+  { key: "mood", title: "Pick your colour mood", options: MOODS },
+  { key: "feel", title: "How should it feel?", options: FEELS },
+];
+const app = $("#matchApp");
+let answers = {};
+
+/** Texture match counts double; colour mood breaks ties. Sold-out slimes are skipped. */
+function recommend({ mood, feel }) {
+  const score = (p) => (p.category === feel ? 2 : 0) + ((p.moods || []).includes(mood) ? 1 : 0);
+  const pool = products.filter((p) => p.stock !== "out");
+  return [...pool].sort((a, b) => score(b) - score(a))[0];
 }
-$("#texTabs").innerHTML = tex.map((c) => `<button role="tab" type="button" data-id="${esc(c.id)}" aria-controls="texPanel">${esc(c.emoji)} ${esc(c.name.replace(" Slime", ""))}</button>`).join("");
-$("#texTabs").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) showTexture(b.dataset.id); });
-$("#texTabs").addEventListener("keydown", (e) => {
-  if (!["ArrowRight", "ArrowLeft"].includes(e.key)) return;
-  const tabs = $$("#texTabs button"); const i = tabs.indexOf(document.activeElement);
-  const next = tabs[(i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length];
-  next.focus(); showTexture(next.dataset.id);
-});
-stage.addEventListener("pointerdown", () => { stage.classList.remove("squish"); void stage.offsetWidth; stage.classList.add("squish"); });
-showTexture(tex[0].id);
 
-// Story collage: four different textures from the catalog.
-const seen = new Set();
-$("#storyArt").innerHTML = products.filter((p) => !seen.has(p.category) && seen.add(p.category)).slice(0, 4)
-  .map((p) => `<div class="story__tile">${slimeArt(p)}</div>`).join("");
+function renderQuestion(i) {
+  const q = QUESTIONS[i];
+  app.innerHTML = `
+    <p class="match__step">Question ${i + 1} of ${QUESTIONS.length}</p>
+    <h3 class="match__q">${q.title}</h3>
+    <div class="match__options">${q.options.map(([id, icon, label]) =>
+      `<button type="button" class="match__opt" data-value="${esc(id)}"><span aria-hidden="true">${icon}</span>${esc(label)}</button>`).join("")}</div>
+    ${i > 0 ? '<button type="button" class="link-btn match__back">← Back</button>' : ""}`;
+  app.querySelectorAll(".match__opt").forEach((b) => b.addEventListener("click", () => {
+    answers[q.key] = b.dataset.value;
+    if (i + 1 < QUESTIONS.length) renderQuestion(i + 1); else renderResult();
+  }));
+  app.querySelector(".match__back")?.addEventListener("click", () => renderQuestion(i - 1));
+}
 
-renderFaqs($("#faqList"), faqs.slice(0, 4));
+function renderResult() {
+  const p = recommend(answers);
+  if (!p) { app.innerHTML = '<p>Everything is sold out right now. Message us on WhatsApp for the next restock.</p>'; return; }
+  const cat = getCategory(p.category);
+  app.innerHTML = `
+    <div class="match__result">
+      <div class="match__art">${slimeArt(p)}</div>
+      <div class="match__info">
+        <p class="pcard__cat">Your match · ${esc(cat?.name || "")}</p>
+        <h3>${esc(p.name)}</h3>
+        <p>${esc(p.description)}</p>
+        ${p.scent ? `<p class="pcard__scent">Scent · ${esc(p.scent)}</p>` : ""}
+        <p class="price">${pkr(p.price)}</p>
+        <div class="match__actions">
+          <button class="btn btn--pink" type="button" data-add="${esc(p.slug)}">Add to cart</button>
+          <a class="btn" href="${productUrl(p)}">View spec sheet</a>
+          <button class="link-btn match__again" type="button">Start over</button>
+        </div>
+      </div>
+    </div>`;
+  app.querySelector(".match__again").addEventListener("click", () => { answers = {}; renderQuestion(0); });
+}
+renderQuestion(0);
+
 refreshReveal();
 initHero($("#heroStage"));
