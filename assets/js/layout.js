@@ -1,53 +1,47 @@
-import { CONFIG } from "./config.js?v=202610230304";
-import { cart } from "./cart.js?v=202610230304";
-import { getProduct } from "./catalog.js?v=202610230304";
-import { $, $$, esc, toast, reducedMotion, shippingText } from "./utils.js?v=202610230304";
-import { initWidget, WA_ICON } from "./whatsapp.js?v=202610230304";
-import { openQuickView } from "./quickview.js?v=202610230304";
+import { CONFIG } from "./config.js?v=202610251319";
+import { cart } from "./cart.js?v=202610251319";
+import { getProduct } from "./catalog.js?v=202610251319";
+import { $, $$, esc, toast, reducedMotion, shippingText } from "./utils.js?v=202610251319";
+import { initWidget, WA_ICON } from "./whatsapp.js?v=202610251319";
+import { openQuickView } from "./quickview.js?v=202610251319";
 
+// Main navigation, matching the client's theme.
 const NAV = [
   ["index.html", "Home"],
-  ["shop.html", "Shop all"],
-  ["index.html#collections", "Collections"],
-  ["shop.html?flag=best", "Best sellers"],
-  ["shop.html?flag=new", "New drops"],
-  ["about.html", "About"],
-  ["faq.html", "FAQ"],
-  ["contact.html", "Contact"],
+  ["shop.html", "Gallery"],
+  ["orders.html", "Orders"],
+  ["care.html", "Care"],
+  ["index.html#craft", "Craft"],
+  ["index.html#love", "Love"],
+  ["index.html#order", "Order"],
 ];
 
-const MARQUEE = ["handmade slime", "squish it", "order on WhatsApp", "no card needed", "stretch it", "new drops", "loud colors", "delivery in Pakistan"];
+const ICONS = {
+  search: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>',
+  bag: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>',
+  menu: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+  instagram: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6" fill="currentColor"/></svg>',
+};
+
+const logo = (size) => `<img src="assets/img/logo-128.webp" width="${size}" height="${size}" alt="" decoding="async">`;
 
 function header(page) {
-  const links = NAV.map(([href, label]) => {
-    const active = (href === page) ? ' aria-current="page"' : "";
-    return `<a href="${href}"${active}>${label}</a>`;
-  }).join("");
-  const words = MARQUEE.map((w) => `<span>${w}</span><span class="marquee__star">✦</span>`).join("");
+  const links = NAV.map(([href, label]) =>
+    `<a href="${href}"${href === page ? ' aria-current="page"' : ""}>${label}</a>`).join("");
   return `
-  <div class="marquee" aria-hidden="true"><div class="marquee__track">${words}${words}</div></div>
-  <div class="nav">
-    <a class="logo" href="index.html" aria-label="${esc(CONFIG.storeName)} home">
-      <span class="logo__blob" aria-hidden="true"></span><span class="logo__text">abi's<br>slime lab</span>
-    </a>
-    <nav class="nav__links" id="navLinks" aria-label="Main">${links}</nav>
-    <div class="nav__actions">
-      <button class="icon-btn" type="button" id="searchOpen" aria-label="Search slimes">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
-      </button>
-      <a class="cart-pill" href="cart.html"><span class="sr-only">Cart, items:</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.4 11.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
-        <span class="cart-pill__count" data-cart-count>0</span>
-      </a>
-      <button class="icon-btn nav__burger" type="button" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </button>
+  <div class="topbar">
+    <a class="logo" href="index.html">${logo(52)}<span class="logo__text">${esc(CONFIG.storeName)}</span></a>
+    <nav class="dock" id="navLinks" aria-label="Main">${links}</nav>
+    <div class="topbar__actions">
+      <button class="icon-btn" type="button" id="searchOpen" aria-label="Search slimes">${ICONS.search}</button>
+      <a class="icon-btn cart-btn" href="cart.html"><span class="sr-only">Cart, items:</span>${ICONS.bag}<span class="cart-btn__count" data-cart-count>0</span></a>
+      <button class="icon-btn nav__burger" type="button" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">${ICONS.menu}</button>
     </div>
   </div>
   <div class="search" id="search" hidden>
     <form class="search__box" action="shop.html" role="search">
       <label class="sr-only" for="searchInput">Search slimes</label>
-      <input id="searchInput" name="q" type="search" placeholder="Search slimes… try “cloud”" autocomplete="off">
+      <input id="searchInput" name="q" type="search" placeholder="Search slimes, e.g. cloud" autocomplete="off">
       <button class="btn btn--pink" type="submit">Search</button>
       <button class="icon-btn" type="button" id="searchClose" aria-label="Close search">✕</button>
     </form>
@@ -55,29 +49,23 @@ function header(page) {
 }
 
 function footer() {
-  const socials = [["instagram", "Instagram"], ["tiktok", "TikTok"], ["facebook", "Facebook"]]
-    .filter(([k]) => CONFIG[k]).map(([k, l]) => `<a href="${esc(CONFIG[k])}" target="_blank" rel="noopener">${l}</a>`).join("");
+  const insta = CONFIG.instagram
+    ? `<a class="footer__icon" href="${esc(CONFIG.instagram)}" target="_blank" rel="noopener" aria-label="Instagram">${ICONS.instagram}</a>` : "";
   return `
-  <div class="wave footer__drip" aria-hidden="true"></div>
   <div class="footer__inner container">
     <div class="footer__brand">
-      <p class="footer__word">abi's<br>slime lab</p>
-      <p>Handmade slime in loud colors and dreamy textures. Order online, confirm on WhatsApp.</p>
-      <button class="btn btn--wa" type="button" data-open-wa>${WA_ICON} Chat on WhatsApp</button>
+      <a class="logo" href="index.html">${logo(56)}<span><b>${esc(CONFIG.storeName)}</b><small>Handmade sensory slime studio · ${esc(CONFIG.city)}, ${esc(CONFIG.country)}</small></span></a>
     </div>
-    <nav class="footer__col" aria-label="Shop"><h2>Shop</h2>
-      <a href="shop.html">All slimes</a><a href="shop.html?flag=best">Best sellers</a><a href="shop.html?flag=new">New drops</a><a href="index.html#collections">Collections</a></nav>
-    <nav class="footer__col" aria-label="Help"><h2>Help</h2>
-      <a href="orders.html">My orders</a><a href="faq.html">FAQ</a><a href="shipping.html">Shipping &amp; delivery</a><a href="returns.html">Returns</a><a href="contact.html">Contact</a></nav>
-    <div class="footer__col"><h2>Say hi</h2>
-      <a href="#" data-open-wa>WhatsApp ${esc(CONFIG.whatsappDisplay)}</a>
-      ${CONFIG.storeEmail ? `<a href="mailto:${esc(CONFIG.storeEmail)}">${esc(CONFIG.storeEmail)}</a>` : ""}
-      ${socials}
-    </div>
+    <nav class="footer__links" aria-label="Footer">
+      <a href="shop.html">The Lab</a><a href="index.html#craft">Craft</a><a href="index.html#order">Order</a><a href="care.html">Care</a>
+      <a href="faq.html">FAQ</a><a href="shipping.html">Delivery</a><a href="returns.html">Returns</a><a href="contact.html">Contact</a>
+      ${insta}
+      <a class="footer__wa" href="#" data-open-wa>${WA_ICON} WhatsApp</a>
+    </nav>
   </div>
   <div class="footer__base container">
-    <p>© ${new Date().getFullYear()} ${esc(CONFIG.storeName)}</p>
-    <p><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
+    <p>© ${new Date().getFullYear()} ${esc(CONFIG.storeName)}. All rights reserved.</p>
+    <p><a href="orders.html">My orders</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
   </div>`;
 }
 
@@ -85,6 +73,7 @@ export function updateCartCount() {
   const n = cart.summary().count;
   $$("[data-cart-count]").forEach((el) => {
     el.textContent = n;
+    el.hidden = n === 0; // no badge on an empty cart
     el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump");
   });
 }
