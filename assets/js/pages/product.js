@@ -1,9 +1,9 @@
-import { initLayout, refreshReveal } from "../layout.js?v=202610260051";
-import { CONFIG } from "../config.js?v=202610260051";
-import { getProduct, getCategory, inCategory, products, productCard, slimeArt, badges, unitPrice, normalizeSelection, STOCK } from "../catalog.js?v=202610260051";
-import { cart } from "../cart.js?v=202610260051";
-import { setWidgetContext } from "../whatsapp.js?v=202610260051";
-import { $, $$, esc, pkr, toast, shippingText } from "../utils.js?v=202610260051";
+import { initLayout, refreshReveal } from "../layout.js?v=202610260106";
+import { CONFIG } from "../config.js?v=202610260106";
+import { getProduct, getCategory, inCategory, products, productCard, slimeArt, badges, unitPrice, normalizeSelection, STOCK } from "../catalog.js?v=202610260106";
+import { cart } from "../cart.js?v=202610260106";
+import { setWidgetContext } from "../whatsapp.js?v=202610260106";
+import { $, $$, esc, pkr, toast, shippingText } from "../utils.js?v=202610260106";
 
 initLayout("shop.html");
 
