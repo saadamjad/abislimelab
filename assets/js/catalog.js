@@ -1,7 +1,7 @@
-import { categories, products } from "../../data/products.js?v=202610260106";
-import { CONFIG } from "./config.js?v=202610260106";
-import { esc, pkr } from "./utils.js?v=202610260106";
-import { slimeSVG } from "./slime-svg.js?v=202610260106";
+import { categories, products } from "../../data/products.js?v=202610260125";
+import { CONFIG } from "./config.js?v=202610260125";
+import { esc, pkr } from "./utils.js?v=202610260125";
+import { slimeSVG } from "./slime-svg.js?v=202610260125";
 
 export { categories, products };
 
@@ -40,6 +40,33 @@ export const STOCK = {
   out: { label: "Sold out", cls: "out" },
 };
 
+// Jars on hand drive the stock status: 0 = sold out, 1–5 = low, more = in stock.
+const LOW_STOCK = 5;
+for (const p of products) {
+  if (Number.isFinite(p.stockQty)) p.stock = p.stockQty <= 0 ? "out" : p.stockQty <= LOW_STOCK ? "low" : "in";
+}
+
+/** Most jars of one product a customer can order: the per-order cap or what's on hand. */
+export const maxQty = (p) => Math.max(0, Math.min(CONFIG.maxQtyPerItem, Number.isFinite(p?.stockQty) ? p.stockQty : Infinity));
+
+/** Stock line for product pages, e.g. "Only 3 left". */
+export function stockInfo(p) {
+  const base = STOCK[p.stock] || STOCK.in;
+  if (p.stock === "low" && Number.isFinite(p.stockQty)) return { ...base, label: `Only ${p.stockQty} left` };
+  return base;
+}
+
+/** Radio groups for a product's options. Options with a `swatch` colour render as colour dots. */
+export function optionsHTML(p, prefix = "v") {
+  return (p.variants || []).map((v, vi) => {
+    const swatches = v.options.some((o) => o.swatch);
+    return `<fieldset class="opts${swatches ? " opts--swatch" : ""}"><legend>${esc(v.name)}${swatches ? `: <b data-picked="${esc(v.name)}">${esc(v.options[0].label)}</b>` : ""}</legend>
+      ${v.options.map((o, oi) => `<label class="opt"><input type="radio" name="${prefix}${vi}" data-variant="${esc(v.name)}" value="${esc(o.label)}" ${oi === 0 ? "checked" : ""}>
+        <span>${o.swatch ? `<i class="swatch" style="--sw:${esc(o.swatch)}" aria-hidden="true"></i>` : ""}${esc(o.label)}${o.delta ? ` <small>+${pkr(o.delta)}</small>` : ""}</span></label>`).join("")}
+    </fieldset>`;
+  }).join("");
+}
+
 export const productUrl = (p) => `product.html?slug=${encodeURIComponent(p.slug)}`;
 
 /** Product visual: real images when provided, otherwise a drawn glossy slime. */
@@ -63,6 +90,13 @@ export function badges(p) {
   return b.join("");
 }
 
+/** Small colour dots for cards, e.g. ●●●● 4 colours. */
+function swatchRow(p) {
+  const opts = (p.variants || []).find((v) => v.options.some((o) => o.swatch))?.options || [];
+  if (!opts.length) return "";
+  return `<p class="pcard__swatches"><span class="sr-only">${opts.length} colours: ${esc(opts.map((o) => o.label).join(", "))}</span>${opts.map((o) => `<i style="--sw:${esc(o.swatch)}" aria-hidden="true"></i>`).join("")}<span aria-hidden="true">${opts.length} colours</span></p>`;
+}
+
 export function productCard(p) {
   const cat = getCategory(p.category);
   const out = p.stock === "out";
@@ -73,6 +107,7 @@ export function productCard(p) {
       <p class="pcard__cat">${esc(cat?.name || "")}</p>
       <h3 class="pcard__title"><a href="${productUrl(p)}">${esc(p.name)}</a></h3>
       ${p.scent ? `<p class="pcard__scent">Scent · ${esc(p.scent)}</p>` : ""}
+      ${swatchRow(p)}
       <p class="pcard__desc">${esc(p.description)}</p>
       <div class="pcard__foot">
         <span class="price">${hasPriceRange(p) ? '<small>from</small> ' : ""}${pkr(minPrice(p))}</span>
