@@ -1,6 +1,8 @@
 # Abi's Slime Lab
 
-Online store for **Abi's Slime Lab**: handmade slimes and DIY kits, sold in Pakistan (PKR).
+Online store for **Abi's Slime Lab**, a handmade sensory slime studio in Karachi, Pakistan (PKR).
+
+The look follows the client's approved theme: off-white background, navy text, magenta accents, lime icon circles, the sticker logo and real product photos.
 
 🌐 **Live site:** [www.abislimelab.com](https://www.abislimelab.com)
 
@@ -25,19 +27,19 @@ Orders start as **Awaiting WhatsApp confirmation** with payment status **Unpaid*
 ## Project structure
 
 ```
-index.html shop.html product.html cart.html checkout.html order.html orders.html admin.html
+index.html shop.html product.html cart.html checkout.html order.html orders.html care.html admin.html
 about.html faq.html contact.html shipping.html returns.html privacy.html terms.html 404.html
 assets/css/      tokens.css, base.css, components.css, pages.css
 assets/js/       config.js, catalog.js, cart.js, orders.js, layout.js, whatsapp.js,
                  hero3d.js, invoice.js, email.js, utils.js
 assets/js/pages/ one script per page
-assets/img/      favicon.svg, og.png (social preview)
+assets/img/      logo, favicons, hero/craft/product photos (WebP), og.jpg (social preview)
 tools/           stamp-version.py (run before each release)
 data/products.js products, collections and FAQs
 .htaccess robots.txt sitemap.xml
 ```
 
-Slime visuals are drawn in code: each texture (butter, cloud, clear, jelly, crunchy, glitter, kit) has its own illustration in `assets/js/slime-svg.js`, colored by each product's `c1` and `c2`. The homepage hero is an interactive 3D slime with six textures; phones without WebGL, or with reduced motion, see the drawn version.
+Products show their photos from `assets/img/`. A product without photos falls back to a drawn slime from `assets/js/slime-svg.js`, colored by its `c1` and `c2`. The homepage has a Slime Match quiz and an interactive 3D slime with five textures; phones without WebGL, or with reduced motion, see the drawn version.
 
 Libraries load from CDNs, pinned to exact versions: Three.js 0.160.0 for the homepage only, jsPDF 2.5.1 on the order page only, and EmailJS 4.4.1 only when emails are configured.
 
