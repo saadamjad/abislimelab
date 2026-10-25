@@ -1,10 +1,10 @@
-import { CONFIG } from "./config.js?v=202610260051";
-import { cart } from "./cart.js?v=202610260051";
-import { getProduct } from "./catalog.js?v=202610260051";
-import { $, $$, esc, toast, reducedMotion, shippingText } from "./utils.js?v=202610260051";
-import { initWidget, WA_ICON } from "./whatsapp.js?v=202610260051";
-import { initFx } from "./fx.js?v=202610260051";
-import { openQuickView } from "./quickview.js?v=202610260051";
+import { CONFIG } from "./config.js?v=202610260106";
+import { cart } from "./cart.js?v=202610260106";
+import { getProduct } from "./catalog.js?v=202610260106";
+import { $, $$, esc, toast, reducedMotion, shippingText } from "./utils.js?v=202610260106";
+import { initWidget, WA_ICON } from "./whatsapp.js?v=202610260106";
+import { initFx } from "./fx.js?v=202610260106";
+import { openQuickView } from "./quickview.js?v=202610260106";
 
 // Main navigation, matching the client's theme.
 const NAV = [
@@ -24,7 +24,7 @@ const ICONS = {
   instagram: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6" fill="currentColor"/></svg>',
 };
 
-const logo = (size) => `<img src="assets/img/logo-128.webp" width="${size}" height="${size}" alt="" decoding="async">`;
+const logo = (size) => `<img src="assets/img/logo-128.webp?v=logo2" width="${size}" height="${size}" alt="" decoding="async">`;
 
 function header(page) {
   const links = NAV.map(([href, label]) =>
