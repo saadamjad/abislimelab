@@ -97,7 +97,7 @@
 .pcard:hover .pcard__quick, .pcard__quick:focus-visible { opacity: 1; transform: translate(-50%, 0); }
 @media (hover: none) { .pcard__quick { opacity: 1; transform: none; left: auto; right: 10px; bottom: 10px; } }
 .pcard__body { display: flex; flex-direction: column; gap: 4px; flex: 1; }
-.pcard__cat { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .28em; color: var(--pink-text); }
+.pcard__cat { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .24em; color: var(--pink-text); }
 .pcard__title { font-size: 1.35rem; font-weight: 650; }
 .pcard__title a { display: inline-block; padding: 4px 0; text-decoration: none; }
 .pcard__title a:hover { color: var(--pink-text); }
@@ -219,3 +219,8 @@
   .toast { bottom: 84px; }
   body.page-buy .wa-fab { display: none; }
 }
+
+/* Colour dots on product cards */
+.pcard__swatches { display: flex; align-items: center; gap: 5px; margin-top: 4px; font-size: .78rem; color: var(--ink-soft); }
+.pcard__swatches i { width: 14px; height: 14px; border-radius: 50%; background: var(--sw); box-shadow: inset 0 0 0 1px rgba(26, 45, 66, .12); }
+.pcard__swatches span { margin-left: 4px; }
