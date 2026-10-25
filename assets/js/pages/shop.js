@@ -1,6 +1,6 @@
-import { initLayout, refreshReveal } from "../layout.js?v=202610230304";
-import { categories, products, productCard, getCategory } from "../catalog.js?v=202610230304";
-import { $, $$, esc } from "../utils.js?v=202610230304";
+import { initLayout, refreshReveal } from "../layout.js?v=202610251319";
+import { categories, products, productCard, getCategory } from "../catalog.js?v=202610251319";
+import { $, $$, esc } from "../utils.js?v=202610251319";
 
 initLayout("shop.html");
 
@@ -12,7 +12,7 @@ const state = {
   sort: params.get("sort") || "featured",
 };
 
-const chips = [["all", "All", "🫧"], ...categories.map((c) => [c.id, c.name.replace(" Slime", ""), c.emoji])];
+const chips = [["all", "All", "🫧"], ...categories.map((c) => [c.id, c.name, c.emoji])];
 $("#catChips").innerHTML = chips.map(([id, name, e]) => `<button type="button" class="chip" data-cat="${esc(id)}">${esc(e)} ${esc(name)}</button>`).join("");
 $("#q").value = state.q;
 $("#sort").value = state.sort;
@@ -36,8 +36,8 @@ function apply() {
   $$(".chip[data-cat]").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.cat === state.cat)));
   $$(".chip[data-flag]").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.flag === state.flag)));
   const cat = getCategory(state.cat);
-  $("#shopTitle").textContent = state.flag === "best" ? "Best sellers" : state.flag === "new" ? "New drops" : cat ? cat.name : "Shop all slime";
-  $("#shopBlurb").textContent = cat ? cat.blurb : "Every texture, every color. Tap a slime to see sizes and scents.";
+  $("#shopTitle").textContent = state.flag === "best" ? "Best sellers" : state.flag === "new" ? "New drops" : cat ? `${cat.name} slime` : "Five textures, one obsession.";
+  $("#shopBlurb").textContent = cat ? cat.blurb : "Every slime is mixed, scented and stretched by hand in our Karachi studio. Tap any jar to open its full texture spec sheet.";
   $("#resultCount").textContent = `${list.length} ${list.length === 1 ? "slime" : "slimes"}`;
   $("#grid").innerHTML = list.length ? list.map(productCard).join("") :
     `<div class="empty"><p class="empty__emoji" aria-hidden="true">🫠</p><h2>No slimes match that</h2><p>Try a different word or clear the filters.</p><button class="btn btn--pink" type="button" id="clearAll">Clear filters</button></div>`;
@@ -49,7 +49,7 @@ function apply() {
   if (state.q) u.set("q", state.q);
   if (state.sort !== "featured") u.set("sort", state.sort);
   history.replaceState(null, "", "shop.html" + (u.toString() ? "?" + u : ""));
-  document.title = `${$("#shopTitle").textContent} | Abi's Slime Lab`;
+  document.title = `${cat ? cat.name + " slime" : "The Gallery"} | Abi's Slime Lab`;
 }
 
 document.addEventListener("click", (e) => {
