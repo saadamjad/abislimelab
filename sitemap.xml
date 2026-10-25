@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.abislimelab.com/</loc></url>
   <url><loc>https://www.abislimelab.com/shop.html</loc></url>
+  <url><loc>https://www.abislimelab.com/care.html</loc></url>
   <url><loc>https://www.abislimelab.com/about.html</loc></url>
   <url><loc>https://www.abislimelab.com/faq.html</loc></url>
   <url><loc>https://www.abislimelab.com/contact.html</loc></url>
@@ -9,23 +10,14 @@
   <url><loc>https://www.abislimelab.com/returns.html</loc></url>
   <url><loc>https://www.abislimelab.com/privacy.html</loc></url>
   <url><loc>https://www.abislimelab.com/terms.html</loc></url>
-  <url><loc>https://www.abislimelab.com/shop.html?cat=butter</loc></url>
   <url><loc>https://www.abislimelab.com/shop.html?cat=cloud</loc></url>
+  <url><loc>https://www.abislimelab.com/shop.html?cat=butter</loc></url>
   <url><loc>https://www.abislimelab.com/shop.html?cat=clear</loc></url>
-  <url><loc>https://www.abislimelab.com/shop.html?cat=jelly</loc></url>
+  <url><loc>https://www.abislimelab.com/shop.html?cat=icee</loc></url>
   <url><loc>https://www.abislimelab.com/shop.html?cat=crunchy</loc></url>
-  <url><loc>https://www.abislimelab.com/shop.html?cat=glitter</loc></url>
-  <url><loc>https://www.abislimelab.com/shop.html?cat=kits</loc></url>
-  <url><loc>https://www.abislimelab.com/product.html?slug=strawberry-milkshake</loc></url>
-  <url><loc>https://www.abislimelab.com/product.html?slug=mango-lassi</loc></url>
-  <url><loc>https://www.abislimelab.com/product.html?slug=cotton-candy-cloud</loc></url>
-  <url><loc>https://www.abislimelab.com/product.html?slug=blue-raspberry-snow</loc></url>
-  <url><loc>https://www.abislimelab.com/product.html?slug=ocean-glass</loc></url>
-  <url><loc>https://www.abislimelab.com/product.html?slug=lemon-fizz</loc></url>
-  <url><loc>https://www.abislimelab.com/product.html?slug=gummy-bear-jelly</loc></url>
-  <url><loc>https://www.abislimelab.com/product.html?slug=cereal-crunch</loc></url>
-  <url><loc>https://www.abislimelab.com/product.html?slug=matcha-pop</loc></url>
-  <url><loc>https://www.abislimelab.com/product.html?slug=galaxy-glitter</loc></url>
-  <url><loc>https://www.abislimelab.com/product.html?slug=unicorn-shimmer</loc></url>
-  <url><loc>https://www.abislimelab.com/product.html?slug=starter-slime-kit</loc></url>
+  <url><loc>https://www.abislimelab.com/product.html?slug=cotton-cloud</loc></url>
+  <url><loc>https://www.abislimelab.com/product.html?slug=buttercream-dream</loc></url>
+  <url><loc>https://www.abislimelab.com/product.html?slug=acid-disaster</loc></url>
+  <url><loc>https://www.abislimelab.com/product.html?slug=frost-icee</loc></url>
+  <url><loc>https://www.abislimelab.com/product.html?slug=teal-tropic-crunch</loc></url>
 </urlset>
