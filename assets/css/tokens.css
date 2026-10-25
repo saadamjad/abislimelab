@@ -1,37 +1,53 @@
+/* Design tokens: follow the client's Abi's Slime Lab theme. */
 :root {
-  --cream: #FFF8F0;
-  --paper: #FFFFFF;
-  --ink: #2A2140;
-  --ink-soft: #5B5274;
-  --pink: #FFA6CF;
-  --pink-text: #A8336B; /* readable pink for text on light backgrounds */
-  --pink-soft: #FFE6F2;
-  --lime: #CFF39A;
-  --lime-soft: #F1FCE0;
-  --grape: #A98BF7;
-  --grape-soft: #EEE7FF;
-  --orange: #FFBE8F;
-  --sky: #9FDDF5;
-  --sky-soft: #E2F6FD;
-  --yellow: #FFEA8A;
-  --wa: #4ADE80;
-  --danger: #D92D20;
+  /* Surfaces */
+  --cream: #F7F7F2;          /* page background */
+  --paper: #FFFFFF;          /* cards */
+  --glass: rgba(255, 255, 255, .72);
 
-  --line: 2px solid var(--ink);
-  --shadow: 4px 4px 0 var(--ink);
-  --shadow-sm: 2px 2px 0 var(--ink);
-  --shadow-lg: 6px 6px 0 var(--ink);
-  --r-xl: 40px;
-  --r-lg: 28px;
-  --r: 20px;
-  --r-sm: 14px;
+  /* Text */
+  --ink: #1A2D42;            /* navy: headings, body, dark sections */
+  --ink-soft: rgba(26, 45, 66, .74);
+  --ink-faint: rgba(26, 45, 66, .7);
+
+  /* Brand accents */
+  --pink: #D6286E;           /* magenta for filled buttons (white text passes contrast) */
+  --pink-bright: #E93D82;    /* magenta for large accents and glows */
+  --pink-text: #C21F63;      /* magenta for small text on light backgrounds */
+  --pink-soft: #FCE7F0;
+  --lime: #C3FF68;           /* icon circles, stars */
+  --lime-soft: #F1FFDC;
+
+  /* Supporting tints (used sparingly by badges and states) */
+  --yellow: #FFF3C4;
+  --sky: #CFE6F7;
+  --sky-soft: #EAF1F7;
+  --grape: #6B7A99;
+  --grape-soft: #EEF1F6;
+  --orange: #FFD9BF;
+  --wa: #25D366;
+  --danger: #C62828;
+
+  /* Lines and depth: hairlines and soft shadows, never hard offsets */
+  --line: 1px solid rgba(26, 45, 66, .08);
+  --line-strong: 1px solid rgba(26, 45, 66, .16);
+  --shadow-sm: 0 4px 14px -6px rgba(26, 45, 66, .18);
+  --shadow: 0 18px 40px -22px rgba(26, 45, 66, .30);
+  --shadow-lg: 0 30px 60px -28px rgba(26, 45, 66, .38);
+  --glow: 0 12px 28px -10px rgba(233, 61, 130, .55);
+
+  --r-xl: 36px;
+  --r-lg: 24px;
+  --r: 18px;
+  --r-sm: 12px;
   --pill: 999px;
 
-  --font-display: "Bagel Fat One", "Arial Rounded MT Bold", system-ui, sans-serif;
-  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font);
 
   --max: 1200px;
   --gutter: clamp(16px, 4vw, 32px);
-  --section: clamp(64px, 9vw, 112px);
+  --section: clamp(64px, 9vw, 120px);
   --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
 }
