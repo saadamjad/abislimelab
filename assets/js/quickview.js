@@ -1,8 +1,8 @@
 /* Quick view: preview a product and add it to the cart from any product card. */
-import { CONFIG } from "./config.js?v=202610251319";
-import { getProduct, getCategory, slimeArt, badges, unitPrice, normalizeSelection, productUrl, STOCK } from "./catalog.js?v=202610251319";
-import { cart } from "./cart.js?v=202610251319";
-import { $, $$, esc, pkr, toast } from "./utils.js?v=202610251319";
+import { CONFIG } from "./config.js?v=202610260051";
+import { getProduct, getCategory, slimeArt, badges, unitPrice, normalizeSelection, productUrl, STOCK } from "./catalog.js?v=202610260051";
+import { cart } from "./cart.js?v=202610260051";
+import { $, $$, esc, pkr, toast } from "./utils.js?v=202610260051";
 
 let dlg;
 function ensureDialog() {
