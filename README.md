@@ -59,7 +59,7 @@ Libraries load from CDNs, pinned to exact versions: Three.js 0.160.0 for the hom
 
 **Product editor (easiest way).** Open `yourdomain.com/admin.html`. Edit products and collections in a form, then download `products.js` and `sitemap.xml` and upload them to Hostinger, as the page explains. The editor only builds files on your computer. It cannot change the live site, so it is safe to leave online, and search engines are told to skip it.
 
-**Products and collections** live in `data/products.js`. Each product has a slug, name, category, price, description, variants, stock (`in`, `low`, `out`), and best-seller and new flags. To use real photos, upload them to `assets/img/` and add `images: ["assets/img/your-photo.webp"]`. Without photos, a drawn slime in the product's colors is shown.
+**Products and collections** live in `data/products.js`. Each product has a `stockQty` (jars on hand: 0 shows Sold out, 1–5 shows "Only N left", and it caps how many jars one order can include) and a Colour option with swatches, e.g. `{ label: "Mango", delta: 0, swatch: "#FFB547" }`. In the product editor, write colours as `Colour: Tropic Teal #3CC5B5, Mango #FFB547`. Each product has a slug, name, category, price, description, variants, stock (`in`, `low`, `out`), and best-seller and new flags. To use real photos, upload them to `assets/img/` and add `images: ["assets/img/your-photo.webp"]`. Without photos, a drawn slime in the product's colors is shown.
 
 After adding or renaming products, update `sitemap.xml` with the new product URLs.
 
