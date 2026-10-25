@@ -1,11 +1,11 @@
 /* Real PDF invoices, generated in the browser with jsPDF from the saved order. */
-import { CONFIG } from "./config.js?v=202610230304";
-import { loadScript, pkr, formatDate, formatPkPhone } from "./utils.js?v=202610230304";
+import { CONFIG } from "./config.js?v=202610251319";
+import { loadScript, pkr, formatDate, formatPkPhone } from "./utils.js?v=202610251319";
 
 const JSPDF = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
 export const loadPdfLib = () => loadScript(JSPDF).then(() => window.jspdf.jsPDF);
 
-const INK = [27, 16, 53], PINK = [255, 79, 163], LIME = [234, 252, 205], GREY = [100, 92, 125];
+const INK = [26, 45, 66], PINK = [214, 40, 110], LIME = [241, 255, 220], GREY = [96, 108, 124];
 
 export function buildInvoice(order, jsPDF) {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
@@ -55,7 +55,7 @@ export function buildInvoice(order, jsPDF) {
     font("normal", 8.5); const varLines = it.variant ? doc.splitTextToSize(it.variant, 100) : [];
     const h = nameLines.length * 5 + varLines.length * 4 + 3;
     if (y + h > 282) { doc.addPage(); y = 18; head(); }
-    if (i % 2 === 0) { doc.setFillColor(248, 244, 255); doc.rect(M, y - 4.5, CW, h + 1, "F"); }
+    if (i % 2 === 0) { doc.setFillColor(247, 247, 242); doc.rect(M, y - 4.5, CW, h + 1, "F"); }
     font("bold", 10); nameLines.forEach((l, k) => text(l, cols.item, y + k * 5));
     font("normal", 8.5, GREY); varLines.forEach((l, k) => text(l, cols.item, y + nameLines.length * 5 + k * 4 - 1));
     font("normal", 10); text(it.qty, cols.qty, y, { align: "center" }); text(pkr(it.unitPrice), cols.unit, y, { align: "center" });
