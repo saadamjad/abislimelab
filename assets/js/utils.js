@@ -1,4 +1,4 @@
-import { CONFIG } from "./config.js?v=202610251319";
+import { CONFIG } from "./config.js?v=202610260051";
 
 export const $ = (sel, root = document) => root.querySelector(sel);
 export const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
