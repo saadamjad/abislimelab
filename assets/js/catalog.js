@@ -1,7 +1,7 @@
-import { categories, products } from "../../data/products.js?v=202610230304";
-import { CONFIG } from "./config.js?v=202610230304";
-import { esc, pkr } from "./utils.js?v=202610230304";
-import { slimeSVG } from "./slime-svg.js?v=202610230304";
+import { categories, products } from "../../data/products.js?v=202610251319";
+import { CONFIG } from "./config.js?v=202610251319";
+import { esc, pkr } from "./utils.js?v=202610251319";
+import { slimeSVG } from "./slime-svg.js?v=202610251319";
 
 export { categories, products };
 
@@ -59,8 +59,6 @@ export function badges(p) {
   const b = [];
   if (p.stock === "out") b.push('<span class="badge badge--out">Sold out</span>');
   else if (p.stock === "low") b.push('<span class="badge badge--low">Few left</span>');
-  if (p.bestSeller) b.push('<span class="badge badge--hot">Best seller</span>');
-  if (p.isNew) b.push('<span class="badge badge--new">New</span>');
   if (p.sample && CONFIG.showSampleBadges) b.push('<span class="badge badge--sample">Sample</span>');
   return b.join("");
 }
@@ -70,14 +68,15 @@ export function productCard(p) {
   const out = p.stock === "out";
   return `<article class="pcard reveal">
     <div class="pcard__media"><a href="${productUrl(p)}" tabindex="-1" aria-hidden="true">${slimeArt(p)}</a><div class="pcard__badges">${badges(p)}</div>
-      <button class="pcard__quick" type="button" data-quick="${esc(p.slug)}" aria-label="Quick view ${esc(p.name)}">👀 Quick view</button></div>
+      <button class="pcard__quick" type="button" data-quick="${esc(p.slug)}" aria-label="Quick view ${esc(p.name)}">Quick view</button></div>
     <div class="pcard__body">
       <p class="pcard__cat">${esc(cat?.name || "")}</p>
       <h3 class="pcard__title"><a href="${productUrl(p)}">${esc(p.name)}</a></h3>
+      ${p.scent ? `<p class="pcard__scent">Scent · ${esc(p.scent)}</p>` : ""}
       <p class="pcard__desc">${esc(p.description)}</p>
       <div class="pcard__foot">
         <span class="price">${hasPriceRange(p) ? '<small>from</small> ' : ""}${pkr(minPrice(p))}</span>
-        <button class="btn btn--sm ${out ? "btn--disabled" : "btn--pink"}" data-add="${esc(p.slug)}" ${out ? "disabled" : ""} aria-label="${out ? "Sold out" : "Add " + esc(p.name) + " to cart"}">${out ? "Sold out" : "Add +"}</button>
+        <button class="btn btn--sm ${out ? "btn--disabled" : "btn--pink"}" data-add="${esc(p.slug)}" ${out ? "disabled" : ""} aria-label="${out ? "Sold out, " + esc(p.name) : "Add to cart, " + esc(p.name)}">${out ? "Sold out" : "Add to cart"}</button>
       </div>
     </div>
   </article>`;
