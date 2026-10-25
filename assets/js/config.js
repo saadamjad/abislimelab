@@ -11,25 +11,27 @@ export const CONFIG = {
   // WhatsApp business number: digits only, with country code, no + or spaces.
   whatsappNumber: "923331831004",
   whatsappDisplay: "+92 333 1831004",
-  whatsappReplyNote: "Typically replies within minutes",
+  whatsappReplyNote: "We confirm within the hour",
+  studioHours: "Monday to Saturday, 12pm – 9pm PKT",
+  city: "Karachi",
 
   storeEmail: "", // EDIT: public contact email, e.g. "hello@abislimelab.com". Hidden when empty.
   adminEmail: "", // EDIT: where new-order emails go. Used only by EmailJS.
 
   // Social links. Leave empty to hide.
-  instagram: "", // EDIT
+  instagram: "https://instagram.com/abislimelab",
   tiktok: "",    // EDIT
   facebook: "",  // EDIT
 
   // Delivery charges in PKR. EDIT these to your real rates.
   shipping: {
-    flatFee: 250,  // fee added to every order
-    freeOver: 0,   // free delivery when subtotal reaches this amount; 0 = never free
+    flatFee: 200,  // fee added to every order
+    freeOver: 3000, // free delivery when subtotal reaches this amount; 0 = never free
   },
   maxQtyPerItem: 10,
 
   // Shows a small "Sample" tag on sample products. Set to false once real products are in.
-  showSampleBadges: true,
+  showSampleBadges: false,
 
   // Transactional emails via EmailJS (https://www.emailjs.com). See README.
   // Leave empty to switch emails off. The public key is safe to keep in the browser.
