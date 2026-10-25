@@ -1,8 +1,8 @@
-import { initLayout, refreshReveal } from "../layout.js?v=202610260106";
-import { categories, products, getCategory, productCard, slimeArt, productUrl } from "../catalog.js?v=202610260106";
-import { initHero } from "../hero3d.js?v=202610260106";
-import { waLink } from "../whatsapp.js?v=202610260106";
-import { $, esc, pkr } from "../utils.js?v=202610260106";
+import { initLayout, refreshReveal } from "../layout.js?v=202610260125";
+import { categories, products, getCategory, productCard, slimeArt, productUrl } from "../catalog.js?v=202610260125";
+import { initHero } from "../hero3d.js?v=202610260125";
+import { waLink } from "../whatsapp.js?v=202610260125";
+import { $, esc, pkr } from "../utils.js?v=202610260125";
 
 initLayout("index.html");
 
