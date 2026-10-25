@@ -1,9 +1,9 @@
-import { initLayout, refreshReveal } from "../layout.js?v=202610260106";
-import { CONFIG } from "../config.js?v=202610260106";
-import { getProduct, getCategory, inCategory, products, productCard, slimeArt, badges, unitPrice, normalizeSelection, STOCK } from "../catalog.js?v=202610260106";
-import { cart } from "../cart.js?v=202610260106";
-import { setWidgetContext } from "../whatsapp.js?v=202610260106";
-import { $, $$, esc, pkr, toast, shippingText } from "../utils.js?v=202610260106";
+import { initLayout, refreshReveal } from "../layout.js?v=202610260125";
+import { CONFIG } from "../config.js?v=202610260125";
+import { getProduct, getCategory, inCategory, products, productCard, slimeArt, badges, unitPrice, normalizeSelection, stockInfo, maxQty, optionsHTML } from "../catalog.js?v=202610260125";
+import { cart } from "../cart.js?v=202610260125";
+import { setWidgetContext } from "../whatsapp.js?v=202610260125";
+import { $, $$, esc, pkr, toast, shippingText } from "../utils.js?v=202610260125";
 
 initLayout("shop.html");
 
@@ -31,7 +31,8 @@ function render() {
 
   let sel = normalizeSelection(p);
   let qty = 1;
-  const stock = STOCK[p.stock] || STOCK.in;
+  const stock = stockInfo(p);
+  const max = Math.max(1, maxQty(p));
   const out = p.stock === "out";
 
   root.innerHTML = `
@@ -46,16 +47,14 @@ function render() {
       <h1 class="pdp__title">${esc(p.name)}</h1>
       <p class="pdp__price" id="price" aria-live="polite">${pkr(unitPrice(p, sel))}</p>
       <p class="stock stock--${stock.cls}"><i aria-hidden="true"></i>${stock.label}</p>
+      ${p.scent ? `<p class="pdp__scent"><b>Scent</b> · ${esc(p.scent)}</p>` : ""}
       <p class="pdp__desc">${esc(p.description)}</p>
       <form id="buyForm" class="pdp__form">
-        ${(p.variants || []).map((v, vi) => `
-          <fieldset class="opts"><legend>${esc(v.name)}</legend>
-          ${v.options.map((o, oi) => `<label class="opt"><input type="radio" name="v${vi}" data-variant="${esc(v.name)}" value="${esc(o.label)}" ${oi === 0 ? "checked" : ""}><span>${esc(o.label)}${o.delta ? ` <small>+${pkr(o.delta)}</small>` : ""}</span></label>`).join("")}
-          </fieldset>`).join("")}
+        ${optionsHTML(p)}
         <div class="pdp__buy">
           <div class="qty" role="group" aria-label="Quantity">
             <button type="button" data-q="-1" aria-label="Decrease quantity">−</button>
-            <input id="qty" type="number" inputmode="numeric" min="1" max="${CONFIG.maxQtyPerItem}" value="1" aria-label="Quantity">
+            <input id="qty" type="number" inputmode="numeric" min="1" max="${max}" value="1" aria-label="Quantity">
             <button type="button" data-q="1" aria-label="Increase quantity">+</button>
           </div>
           <button class="btn btn--pink btn--lg btn--grow ${out ? "btn--disabled" : ""}" type="submit" ${out ? "disabled" : ""}>${out ? "Sold out" : "Add to cart"}</button>
@@ -63,7 +62,8 @@ function render() {
       </form>
       <ul class="pdp__perks">
         <li><b>🧾 No card needed.</b> Place your order, then confirm it on WhatsApp.</li>
-        <li><b>🚚 Delivery:</b> <span>${esc(shippingText())}</span> within Pakistan.</li>
+        <li><b>🚚 Delivery:</b> <span>${esc(shippingText())}</span>. Same day in Karachi, nationwide via Leopards Courier.</li>
+        <li><b>💸 Payment:</b> Cash on delivery in Karachi.</li>
         <li><b>💬 Questions?</b> <a href="#" data-open-wa>Ask us on WhatsApp</a>.</li>
       </ul>
     </div>
@@ -71,13 +71,19 @@ function render() {
 
   const priceEl = $("#price"), qtyEl = $("#qty");
   const updatePrice = () => { $("#price").textContent = pkr(unitPrice(p, sel) * qty) + (qty > 1 ? ` (${qty} × ${pkr(unitPrice(p, sel))})` : ""); };
-  $$("input[data-variant]").forEach((r) => r.addEventListener("change", () => { sel[r.dataset.variant] = r.value; updatePrice(); }));
-  const setQty = (n) => { qty = Math.max(1, Math.min(CONFIG.maxQtyPerItem, Math.floor(Number(n) || 1))); qtyEl.value = qty; updatePrice(); };
+  $$("input[data-variant]").forEach((r) => r.addEventListener("change", () => {
+    sel[r.dataset.variant] = r.value;
+    const picked = root.querySelector(`[data-picked="${CSS.escape(r.dataset.variant)}"]`);
+    if (picked) picked.textContent = r.value;
+    updatePrice();
+  }));
+  const setQty = (n) => { qty = Math.max(1, Math.min(max, Math.floor(Number(n) || 1))); qtyEl.value = qty; updatePrice(); };
   $$("[data-q]").forEach((b) => b.addEventListener("click", () => setQty(qty + Number(b.dataset.q))));
   qtyEl.addEventListener("change", () => setQty(qtyEl.value));
   $("#buyForm").addEventListener("submit", (e) => {
     e.preventDefault();
     if (cart.add(p.slug, sel, qty)) toast(`<b>${esc(p.name)}</b> × ${qty} added 🫧 <a href="cart.html">View cart →</a>`);
+    else toast(`You already have all available ${esc(p.name)} jars in your cart. <a href="cart.html">View cart →</a>`);
   });
   $$(".pdp__thumbs button").forEach((b) => b.addEventListener("click", () => { $("#pdpStage img").src = b.dataset.img; }));
   const art = $("#pdpStage .slime-art");
