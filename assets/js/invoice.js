@@ -1,6 +1,6 @@
 /* Real PDF invoices, generated in the browser with jsPDF from the saved order. */
-import { CONFIG } from "./config.js?v=202610251319";
-import { loadScript, pkr, formatDate, formatPkPhone } from "./utils.js?v=202610251319";
+import { CONFIG } from "./config.js?v=202610260051";
+import { loadScript, pkr, formatDate, formatPkPhone } from "./utils.js?v=202610260051";
 
 const JSPDF = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
 export const loadPdfLib = () => loadScript(JSPDF).then(() => window.jspdf.jsPDF);
