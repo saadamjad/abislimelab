@@ -1,8 +1,8 @@
 /* Product editor: edit the catalog in a form, then download products.js and sitemap.xml to upload.
    It never writes to the server. Work in progress is kept in this browser as a draft. */
-import { categories as C0, products as P0, faqs as F0 } from "../../../data/products.js?v=202610260106";
-import { CONFIG } from "../config.js?v=202610260106";
-import { $, $$, esc, store, toast } from "../utils.js?v=202610260106";
+import { categories as C0, products as P0, faqs as F0 } from "../../../data/products.js?v=202610260125";
+import { CONFIG } from "../config.js?v=202610260125";
+import { $, $$, esc, store, toast } from "../utils.js?v=202610260125";
 
 const DRAFT = "asl_editor_draft_v1";
 const clone = (x) => JSON.parse(JSON.stringify(x));
@@ -11,13 +11,16 @@ let current = 0;
 const save = () => { store.set(DRAFT, state); $("#draftNote").textContent = "Draft saved in this browser. Download files to publish."; };
 
 const slugify = (s) => s.toLowerCase().normalize("NFKD").replace(/[^\w\s-]/g, "").trim().replace(/[\s_]+/g, "-").replace(/-+/g, "-");
-const variantsToText = (v = []) => v.map((x) => `${x.name}: ${x.options.map((o) => `${o.label}${o.delta ? "=" + o.delta : ""}`).join(", ")}`).join("\n");
+const variantsToText = (v = []) => v.map((x) => `${x.name}: ${x.options.map((o) => `${o.label}${o.swatch ? " " + o.swatch : ""}${o.delta ? "=" + o.delta : ""}`).join(", ")}`).join("\n");
 function textToVariants(t) {
   return t.split("\n").map((l) => l.trim()).filter(Boolean).map((l) => {
     const [name, rest = ""] = l.split(/:(.*)/s);
     const options = rest.split(",").map((o) => o.trim()).filter(Boolean).map((o) => {
-      const [label, delta] = o.split("=");
-      return { label: label.trim(), delta: Math.round(Number(delta) || 0) };
+      const [raw, delta] = o.split("=");
+      const hex = raw.match(/#[0-9a-f]{3,8}\b/i)?.[0];
+      const opt = { label: raw.replace(hex || "", "").trim(), delta: Math.round(Number(delta) || 0) };
+      if (hex) opt.swatch = hex;
+      return opt;
     });
     return { name: name.trim(), options };
   }).filter((v) => v.name && v.options.length);
@@ -36,7 +39,7 @@ function renderForm() {
   f.hidden = false;
   f.pname.value = p.name; f.slug.value = p.slug; f.price.value = p.price; f.description.value = p.description; f.scent.value = p.scent || "";
   f.category.innerHTML = state.categories.map((c) => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");
-  f.category.value = p.category; f.stock.value = p.stock; f.emoji.value = p.emoji || "";
+  f.category.value = p.category; f.stock.value = p.stock; f.stockQty.value = Number.isFinite(p.stockQty) ? p.stockQty : ""; f.emoji.value = p.emoji || "";
   f.c1.value = p.c1 || "#FF8DC0"; f.c2.value = p.c2 || "#FFD1E8";
   f.images.value = (p.images || []).join("\n");
   f.variants.value = variantsToText(p.variants);
@@ -50,9 +53,11 @@ function readForm() {
   Object.assign(p, {
     name: f.pname.value.trim(), slug: slugify(f.slug.value || f.pname.value), price: Math.max(0, Math.round(Number(f.price.value) || 0)),
     description: f.description.value.trim(), scent: f.scent.value.trim(), category: f.category.value, stock: f.stock.value, emoji: f.emoji.value.trim(),
-    c1: f.c1.value, c2: f.c2.value, variants: textToVariants(f.variants.value), bestSeller: f.bestSeller.checked,
+    c1: f.c1.value, c2: f.c2.value, variants: textToVariants(f.variants.value),
+    stockQty: f.stockQty.value === "" ? undefined : Math.max(0, Math.round(Number(f.stockQty.value) || 0)), bestSeller: f.bestSeller.checked,
     isNew: f.isNew.checked, addedAt: f.addedAt.value,
   });
+  if (p.stockQty === undefined) delete p.stockQty;
   const imgs = f.images.value.split("\n").map((s) => s.trim()).filter(Boolean);
   if (imgs.length) p.images = imgs; else delete p.images;
   if (f.sample.checked) p.sample = true; else delete p.sample;
