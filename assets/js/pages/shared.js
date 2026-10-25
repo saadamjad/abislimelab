@@ -1,5 +1,5 @@
-import { CONFIG } from "../config.js?v=202610251319";
-import { esc, pkr, shippingText } from "../utils.js?v=202610251319";
+import { CONFIG } from "../config.js?v=202610260051";
+import { esc, pkr, shippingText } from "../utils.js?v=202610260051";
 
 export function faqText(s) {
   return s.replaceAll("{fee}", shippingText()).replaceAll("{whatsapp}", CONFIG.whatsappDisplay);
