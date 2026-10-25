@@ -1,9 +1,10 @@
-import { CONFIG } from "./config.js?v=202610251319";
-import { cart } from "./cart.js?v=202610251319";
-import { getProduct } from "./catalog.js?v=202610251319";
-import { $, $$, esc, toast, reducedMotion, shippingText } from "./utils.js?v=202610251319";
-import { initWidget, WA_ICON } from "./whatsapp.js?v=202610251319";
-import { openQuickView } from "./quickview.js?v=202610251319";
+import { CONFIG } from "./config.js?v=202610260051";
+import { cart } from "./cart.js?v=202610260051";
+import { getProduct } from "./catalog.js?v=202610260051";
+import { $, $$, esc, toast, reducedMotion, shippingText } from "./utils.js?v=202610260051";
+import { initWidget, WA_ICON } from "./whatsapp.js?v=202610260051";
+import { initFx } from "./fx.js?v=202610260051";
+import { openQuickView } from "./quickview.js?v=202610260051";
 
 // Main navigation, matching the client's theme.
 const NAV = [
@@ -138,4 +139,5 @@ export function initLayout(page) {
   window.addEventListener("cart:change", updateCartCount);
   updateCartCount();
   initReveal();
+  initFx();
 }
