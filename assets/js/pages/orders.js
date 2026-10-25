@@ -1,6 +1,6 @@
-import { initLayout } from "../layout.js?v=202610260051";
-import { allOrders } from "../orders.js?v=202610260051";
-import { $, esc, pkr, formatDate } from "../utils.js?v=202610260051";
+import { initLayout } from "../layout.js?v=202610260106";
+import { allOrders } from "../orders.js?v=202610260106";
+import { $, esc, pkr, formatDate } from "../utils.js?v=202610260106";
 
 initLayout("orders.html");
 const list = allOrders();
