@@ -1,10 +1,10 @@
-import { CONFIG } from "./config.js?v=202610260106";
-import { cart } from "./cart.js?v=202610260106";
-import { getProduct } from "./catalog.js?v=202610260106";
-import { $, $$, esc, toast, reducedMotion, shippingText } from "./utils.js?v=202610260106";
-import { initWidget, WA_ICON } from "./whatsapp.js?v=202610260106";
-import { initFx } from "./fx.js?v=202610260106";
-import { openQuickView } from "./quickview.js?v=202610260106";
+import { CONFIG } from "./config.js?v=202610260125";
+import { cart } from "./cart.js?v=202610260125";
+import { getProduct } from "./catalog.js?v=202610260125";
+import { $, $$, esc, toast, reducedMotion, shippingText } from "./utils.js?v=202610260125";
+import { initWidget, WA_ICON } from "./whatsapp.js?v=202610260125";
+import { initFx } from "./fx.js?v=202610260125";
+import { openQuickView } from "./quickview.js?v=202610260125";
 
 // Main navigation, matching the client's theme.
 const NAV = [
@@ -129,7 +129,9 @@ export function initLayout(page) {
     const btn = e.target.closest("[data-add]");
     if (!btn) return;
     const p = getProduct(btn.dataset.add);
-    if (p && cart.add(p.slug)) toast(`<b>${esc(p.name)}</b> added 🫧 <a href="cart.html">View cart →</a>`);
+    if (!p) return;
+    if (cart.add(p.slug)) toast(`<b>${esc(p.name)}</b> added 🫧 <a href="cart.html">View cart →</a>`);
+    else if (p.stock !== "out") toast(`You already have all available ${esc(p.name)} jars in your cart. <a href="cart.html">View cart →</a>`);
   });
 
   // Fill config values into static pages: <span data-cfg="whatsapp">.
