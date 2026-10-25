@@ -2,22 +2,21 @@
    Each texture changes the shape, surface and extras, not just the color.
    Three.js loads only on the homepage. Without WebGL, or with reduced motion,
    a drawn slime is shown instead and still squishes on tap. */
-import { $, $$, reducedMotion } from "./utils.js?v=202610230304";
-import { slimeSVG } from "./slime-svg.js?v=202610230304";
+import { $, $$, reducedMotion } from "./utils.js?v=202610251319";
+import { slimeSVG } from "./slime-svg.js?v=202610251319";
 
 export const MODES = {
-  butter:  { hex: "#FFD84D", c2: "#FFB547", label: "Butter",  desc: "Smooth and matte. Spreads like frosting.",       roughness: 0.55, clearcoat: 0.2, transmission: 0,   sheen: 0, iridescence: 0, wobble: 0.05, bump: 0,     scale: [1.12, 0.84, 1.12] },
-  cloud:   { hex: "#FF9FD0", c2: "#C4B5FD", label: "Cloud",   desc: "Fluffy and bumpy. Drizzles when you stretch it.", roughness: 0.95, clearcoat: 0,   transmission: 0,   sheen: 1, iridescence: 0, wobble: 0.04, bump: 0.06,  scale: [1, 0.95, 1] },
-  clear:   { hex: "#58D3FF", c2: "#A5F3FC", label: "Clear",   desc: "Glassy and see-through. Great for bubbles.",      roughness: 0.03, clearcoat: 1,   transmission: 0.9, sheen: 0, iridescence: 0.2, wobble: 0.04, bump: 0,   scale: [1.05, 0.9, 1.05] },
-  jelly:   { hex: "#FB7185", c2: "#FDBA74", label: "Jelly",   desc: "Thick and bouncy. Wobbles back when poked.",      roughness: 0.12, clearcoat: 1,   transmission: 0.3, sheen: 0, iridescence: 0, wobble: 0.1,  bump: 0,     scale: [0.95, 1.08, 0.95] },
-  crunchy: { hex: "#A3E635", c2: "#D9F99D", label: "Crunchy", desc: "Packed with beads for a loud crunch.",            roughness: 0.5,  clearcoat: 0.3, transmission: 0,   sheen: 0, iridescence: 0, wobble: 0.04, bump: 0,     scale: [1.08, 0.88, 1.08], beads: true },
-  glitter: { hex: "#8B5CF6", c2: "#F0ABFC", label: "Glitter", desc: "Deep color with sparkles in every stretch.",      roughness: 0.15, clearcoat: 1,   transmission: 0,   sheen: 0, iridescence: 1, wobble: 0.06, bump: 0,     scale: [1.05, 0.92, 1.05], sparkle: true },
+  cloud:   { hex: "#F7B6D2", c2: "#FCE7F0", label: "Cloud",   desc: "Airy and fluffy. Drapes like whipped cream.",      roughness: 0.95, clearcoat: 0,   transmission: 0,    sheen: 1, iridescence: 0,   wobble: 0.04, bump: 0.06, scale: [1, 0.95, 1] },
+  butter:  { hex: "#F3D27A", c2: "#FFF3C4", label: "Butter",  desc: "Dense and smooth. Spreads like frosting.",        roughness: 0.55, clearcoat: 0.2, transmission: 0,    sheen: 0, iridescence: 0,   wobble: 0.05, bump: 0,    scale: [1.12, 0.84, 1.12] },
+  clear:   { hex: "#8BE33B", c2: "#D9FF9E", label: "Clear",   desc: "Glassy and cured for weeks. Made for bubbles.",   roughness: 0.03, clearcoat: 1,   transmission: 0.88, sheen: 0, iridescence: 0.2, wobble: 0.04, bump: 0,    scale: [1.05, 0.9, 1.05] },
+  icee:    { hex: "#3D8BE0", c2: "#BFE3FA", label: "Icee",    desc: "Slushy crystals that melt and reform as you play.", roughness: 0.35, clearcoat: 0.8, transmission: 0.2,  sheen: 0, iridescence: 0,   wobble: 0.05, bump: 0.03, scale: [1.02, 0.94, 1.02], sparkle: true },
+  crunchy: { hex: "#3CC5B5", c2: "#C9F3EC", label: "Crunchy", desc: "Loaded with beads for the loudest crackle.",       roughness: 0.45, clearcoat: 0.3, transmission: 0,    sheen: 0, iridescence: 0,   wobble: 0.04, bump: 0,    scale: [1.08, 0.88, 1.08], beads: true },
 };
 
 export async function initHero(stage) {
-  const wrap = stage.parentElement;
+  const wrap = stage.closest("section") || document;
   const fallback = stage.querySelector(".hero-fallback");
-  let api = null, current = "butter";
+  let api = null, current = Object.keys(MODES)[0];
 
   const setMode = (key) => {
     const m = MODES[key]; if (!m) return;
@@ -25,14 +24,14 @@ export async function initHero(stage) {
     $$(".hero-chip", wrap).forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.mode === key)));
     stage.dataset.slime = key;
     $("#heroSlimeNote", wrap).innerHTML = `<strong>${m.label} slime</strong>${m.desc}`;
-    fallback.innerHTML = slimeSVG(key === "crunchy" ? "crunchy" : key, m.hex, m.c2, "hero");
+    fallback.innerHTML = slimeSVG(key === "icee" ? "cloud" : key, m.hex, m.c2, "hero");
     api?.setMode(m);
   };
   $$(".hero-chip", wrap).forEach((c) => c.addEventListener("click", () => setMode(c.dataset.mode)));
 
   const poked = () => stage.classList.add("poked");
   fallback.addEventListener("pointerdown", () => { poked(); fallback.classList.remove("squish"); void fallback.offsetWidth; fallback.classList.add("squish"); });
-  setMode("butter");
+  setMode(current);
 
   if (reducedMotion()) return;
   const probe = document.createElement("canvas");
@@ -90,11 +89,11 @@ function build(THREE, RoomEnvironment, stage, onPoke) {
   blob.add(beads);
   const sparkDirs = dirs(small ? 90 : 140);
   const sparkGeo = new THREE.BufferGeometry().setAttribute("position", new THREE.Float32BufferAttribute(sparkDirs.flatMap((d) => [d.x * R * 1.03, d.y * R * 1.03, d.z * R * 1.03]), 3));
-  const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({ color: 0xfff6c2, size: 0.05, transparent: true }));
+  const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.05, transparent: true }));
   blob.add(sparks);
 
   let m = null;
-  let targetColor = new THREE.Color(0xffd84d);
+  let targetColor = new THREE.Color(MODES.cloud.hex);
   const baseScale = new THREE.Vector3(1, 1, 1), targetScale = new THREE.Vector3(1, 1, 1);
   let wobble = 0.05, bump = 0, tBump = 0, tWobble = 0.05;
   const poke = { dir: new THREE.Vector3(0, 0, 1), amp: 0, age: 0 };
