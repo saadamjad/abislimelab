@@ -32,7 +32,7 @@ p { text-wrap: pretty; }
 
 .sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 32px; margin-bottom: clamp(28px, 5vw, 56px); }
 .sec-head p { max-width: 34rem; color: var(--ink-soft); }
-.eyebrow { display: inline-block; font-weight: 600; text-transform: uppercase; letter-spacing: .28em; font-size: .72rem; margin-bottom: 16px; color: var(--pink-text); }
+.eyebrow { display: inline-block; font-weight: 600; text-transform: uppercase; letter-spacing: .26em; font-size: .75rem; margin-bottom: 16px; color: var(--pink-text); }
 
 /* Scroll reveal (only hides content when JS runs) */
 .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
