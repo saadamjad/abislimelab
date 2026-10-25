@@ -1,6 +1,6 @@
 /* Motion layer: decorative effects only. Nothing here is needed to shop.
    Off for reduced-motion users; mouse-only effects stay off on touch screens. */
-import { $$, reducedMotion } from "./utils.js?v=202610260106";
+import { $$, reducedMotion } from "./utils.js?v=202610260125";
 
 const finePointer = () => matchMedia("(hover: hover) and (pointer: fine)").matches;
 
